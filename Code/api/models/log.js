@@ -20,7 +20,9 @@ var LogSchema = new Schema({
 	major : { type: String, required: false},	//End of Rev Student Application fields
 	action: {type: String, required: true}, //Accept or Reject
     type: {type: String, required: true}, //Ex: Review Project Proposal or Review Student Application
-    time: {type: Date, default: Date.now}
+    time: {type: Date, default: Date.now},
+	// User Story #1144
+    skillItem: {type: String, required: false}
 	
 });
 

@@ -33,7 +33,10 @@ var UsersSchema = new Schema({
         email: String,
         name: String
     },
-	joined_project: Boolean
+	joined_project: Boolean,
+	
+	// User Story #1144
+    skillItem: {type: String, required: false}
 
 });
 

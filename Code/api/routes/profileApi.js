@@ -28,6 +28,8 @@ module.exports = function(app, express) {
                 profile.school = req.body.school;
                 profile.gender = req.body.gender;
                 profile.department = req.body.department;
+				 // User Story #1144
+                profile.skillItem = req.body.skillItem;
                 
                 console.log("new gender: " + profile.gender);
                 console.log("new college: " + profile.college);
@@ -69,6 +71,8 @@ module.exports = function(app, express) {
 				profile.modifying = req.body.modifying;
                 profile.isDecisionMade = req.body.isDecisionMade;
                 profile.joined_project = req.body.joined_project;
+				 // User Story #1144
+                profile.skillItem = req.body.skillItem;
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
                 
@@ -220,6 +224,8 @@ module.exports = function(app, express) {
 				profile.image = req.body.image;
 				profile.resume = req.body.resume;
                 
+				// User Story #1144
+                profile.skillItem = req.body.skillItem;
                 // this field will be set to true if the acceptProfile() function called us
                 if (req.body.piApproval)
                 {
