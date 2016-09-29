@@ -11,10 +11,18 @@
                         <strong>{{vm.data.title}}</strong>
                     </h2>
                     <hr>
-                    <img src="{{vm.data.image}}" class="proj-image" />
+                    <!-- User Story #1142-->
+                    <!-- <img src="{{vm.data.image}}" class="proj-image" /> -->
                     <h4>About this project</h4>
-                    <p class="proj-description">
-                        {{vm.data.description}}
+                    <!--<p class="proj-description"> {{vm.data.description}} </p> -->
+                    <pre class="proj-description"  style="border:white;background-color:#FFFFFF;white-space:pre-line">
+                        <img src="{{vm.data.image}}" class="proj-image" />
+                        <div ng-bind-html="vm.data.description"></div>
+                    </pre>
+					 <!-- User Story #1144 -->
+                    <p>
+                        <label>Skills required:</label>
+                        {{vm.data.reqskillItem}}
                     </p>
             </div>
         </div>
@@ -25,6 +33,7 @@
              <a target="_blank" href="{{vm.data.github_url}}"><i ng-hide="!(vm.data.github_url)" class="fa fa-github social-icon" aria-hidden="true"></i></a>
              <a target="_blank" href="{{vm.data.drive_url}}"><i ng-hide="!(vm.data.drive_url)" class="fa fa-google social-icon" style="margin-left: 10px;" aria-hidden="true"></i></a>
              <a target="_blank" href="{{vm.data.youtube_url}}"><i ng-hide="!(vm.data.youtube_url)" class="fa fa-youtube social-icon" style="margin-left: 10px;" aria-hidden="true"></i></a>
+			 <a target="_blank" href="{{vm.data.mingle_url}}"><i ng-hide="!(vm.data.mingle_url)" class="fa fa-medium social-icon" style="margin-left: 10px;" aria-hidden="true"></i></a>
              <hr>
                 <h4>Project Owners</h4>
                 <div>

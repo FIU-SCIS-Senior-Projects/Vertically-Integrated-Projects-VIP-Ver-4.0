@@ -201,7 +201,7 @@ angular
         {
             console.log("FormData.sProject = " + FormData.sProject + ", " + "FormData.semester = " + FormData.semester + ", " + "FormData.user_type = " + FormData.user_type + ", " + "FormData.pID = " + FormData.pID + ", "  + "FormData.selectedCollege = " + FormData.selectedCollege + ", " + "FormData.school = " + FormData.school);
             // make sure student has: selected a project, chosen a semester, pantherID, college, school/department
-            if ( (FormData.sProject != null) && (FormData.semester != null) && (FormData.user_type != null) && (FormData.pID != null) && (FormData.selectedCollege != null) && (FormData.school != null) )
+            if ( (FormData.sProject != null) && (FormData.semester != null) && (FormData.user_type != null) && (FormData.pID != null) && (FormData.selectedCollege != null) && (FormData.school != null) && (FormData.skillItem != null) )
             {
                 return 1;
             }
@@ -278,6 +278,12 @@ angular
                 {
                     console.log("5");
                     vm.profile.gender = vm.gender;
+                }
+				 // User Story #1144
+                if (vm.profile.skillItem != vm.skillItem)
+                {
+                    console.log("6");
+                    vm.profile.skillItem = vm.skillItem;
                 }
 
                 console.log("vm.profile.pantherID = " + vm.profile.pantherID + ", vm.pID = " + vm.pID);

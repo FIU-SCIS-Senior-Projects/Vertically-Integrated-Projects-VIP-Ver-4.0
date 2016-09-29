@@ -6,14 +6,18 @@
 			<td><label>College</label></td><td><label>Major</label></td><td><label>Selected Project</label></td><td><label>Approve</label></td><td><label>Reject</label></td>
 			</tr>
 			<tr ng-repeat="user in vm.membs track by $index">
-			<td><input type="text" class="form-control profile" value={{user.firstName}} readonly></input></td>
-			<td><input type="text" class="form-control profile" value={{user.lastName}} readonly></input></td>
-			<td><input type="text" class="form-control profile" value={{user.gender}} readonly></input></td>
-			<td><input type="text" class="form-control profile" value={{user.email}} readonly></input></td>
-			<td><input type="text" class="form-control profile" value={{user.department}} readonly></input></td>
-			<td><input type="text" class="form-control profile" value={{user.college}} readonly></input></td>
-			<td><input type="text" class="form-control profile" value={{user.major}} readonly></input></td>
-			<td><input type="text" class="form-control profile" value={{user.project}} readonly></input></td>
+			
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.firstName}}><input type="text" class="form-control profile" value={{user.firstName}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.lastName}}><input type="text" class="form-control profile" value={{user.lastName}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.gender}}><input type="text" class="form-control profile" value={{user.gender}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.email}}><input type="text" class="form-control profile" value={{user.email}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.department}}><input type="text" class="form-control profile" value={{user.department}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.college}}><input type="text" class="form-control profile" value={{user.college}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.major}}><input type="text" class="form-control profile" value={{user.major}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.project}}><input type="text" class="form-control profile" value={{user.project}} readonly></input></a></td>
+			<!-- User Story #1144 -->
+			<td><a data-toggle="tooltip" data-placement="top" title={{user.skillItem}}><input type="text" class="form-control profile" value={{user.skillItem}} readonly></input></a></td>
+			<td>
 			<td>
             <div class="text-center">
                 <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.ApproveData(user)">
@@ -40,14 +44,16 @@
 			<td><label>College</label></td><td><label>Major</label></td><td><label>Selected Project</label></td><td><label>Action</label></td><td><label>Undo</label></td>
 			</tr>
 			<tr ng-repeat="log in vm.logs | filter:{ type: 'student' }">
-			<td><input type="text" class="form-control log" value={{log.firstName}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.lastName}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.gender}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.studentemail}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.department}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.college}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.major}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.selectProject}} readonly></input></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.firstName}}><input type="text" class="form-control log" value={{log.firstName}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.lastName}}><input type="text" class="form-control log" value={{log.lastName}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.gender}}><input type="text" class="form-control log" value={{log.gender}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.studentemail}}><input type="text" class="form-control log" value={{log.studentemail}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.department}}><input type="text" class="form-control log" value={{log.department}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.college}}><input type="text" class="form-control log" value={{log.college}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.major}}><input type="text" class="form-control log" value={{log.major}} readonly></input></a></td>
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.selectProject}}><input type="text" class="form-control log" value={{log.selectProject}} readonly></input></a></td>
+			<!-- User Story #1144 -->
+			<td><a data-toggle="tooltip" data-placement="top" title={{log.skillItem}}><input type="text" class="form-control log" value={{log.skillItem}} readonly></input></a></td>
 			<td><input type="text" class="form-control log" value={{log.action}} readonly></input></td>
 			<td>
             <div class="text-center">

@@ -117,8 +117,9 @@
 				User.nodeEmail(email_msg);
 			});
 
+            // User Story #1144
 			success_msg();
-			var log = {projectid: user.projectid, student: user._id, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: user.project, gender: user.gender, department: user.department, college: user.college, action: "Approved", type: "student" };
+			var log = {projectid: user.projectid, student: user._id, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: user.project, gender: user.gender, department: user.department, college: user.college, action: "Approved", type: "student", skillItem: user.skillItem };
 			reviewPPS.createLog(log).then(function(success)  {
 					
 				}, function(error) {
@@ -151,7 +152,8 @@
 				User.nodeEmail(email_msg);
 
 			});
-			var log = {projectid: user.projectid, student: user._id, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: name, gender: user.gender, department: user.department, college: user.college, action: "Rejected", type: "student" };
+			//User Story #1144
+			var log = {projectid: user.projectid, student: user._id, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: name, gender: user.gender, department: user.department, college: user.college, action: "Rejected", type: "student", skillItem: user.skillItem };
 			reviewPPS.createLog(log).then(function(success)  {
 					
 				}, function(error) {

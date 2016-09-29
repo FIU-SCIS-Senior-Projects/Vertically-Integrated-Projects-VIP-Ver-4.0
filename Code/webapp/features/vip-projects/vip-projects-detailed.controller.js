@@ -92,7 +92,6 @@
                     }
 
                     console.log("Productowner array: ");
-                    alert(vm.productOwner);
 				}	
 				ProfileService.loadProfile().then(function(data){
 					profile = data;
