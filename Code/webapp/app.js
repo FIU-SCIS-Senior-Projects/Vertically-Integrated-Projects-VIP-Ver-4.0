@@ -19,7 +19,8 @@ angular.module('mainApp', [
 	'reviewStudentApp',
 	'reviewProjectProposals',
 	'admin',
-    'MessengerController'
+    'MessengerController',
+	'angularTrix'
 ]).filter('selectedTags', function() {
     return function(users, members)
     {
