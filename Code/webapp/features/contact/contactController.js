@@ -14,10 +14,10 @@ angular.module('contactController', ['userService'])
             {
                 if(vm.option == "Technical issue")
                 {
-                    //, dlope073@fiu.edu, mtahe006@fiu.edu, vlalo001@fiu.edu, mmart196@fiu.edu
+                    //, jgonz770@fiu.edu, mtahe006@fiu.edu, vlalo001@fiu.edu
                     var email_msg = 
                     {
-                        recipient: "jjens011@fiu.edu, mtahe006@fiu.edu, dlope073@fiu.edu, vlalo001@fiu.edu, mmart196@fiu.edu", 
+                        recipient: "mtahe006@fiu.edu, jgonz770@fiu.edu, vlalo001@fiu.edu", 
                         text: vm.issue + "  -------You can reply to the user if necessary at: " + vm.email, 
                         subject: "(VIP) Technical Issue: " + vm.title
                     };

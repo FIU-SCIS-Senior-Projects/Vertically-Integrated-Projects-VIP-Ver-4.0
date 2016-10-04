@@ -570,7 +570,7 @@
 					recipient: email, 
 					text:  "Dear VIP user, your current project has been cleared. For more information, please contact a PI.",
 					subject: "Project Cleared", 
-					recipient2: "test@example.com", 
+					recipient2: "jgonz770@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
 					text2: "", 
 					subject2: "" 
 				};
