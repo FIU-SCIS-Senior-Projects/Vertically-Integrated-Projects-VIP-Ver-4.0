@@ -28,7 +28,7 @@ module.exports = function(app, express) {
                 profile.school = req.body.school;
                 profile.gender = req.body.gender;
                 profile.department = req.body.department;
-                // User Story #1144
+				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
                 
                 console.log("new gender: " + profile.gender);
@@ -71,7 +71,7 @@ module.exports = function(app, express) {
 				profile.modifying = req.body.modifying;
                 profile.isDecisionMade = req.body.isDecisionMade;
                 profile.joined_project = req.body.joined_project;
-                // User Story #1144
+				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
@@ -223,8 +223,13 @@ module.exports = function(app, express) {
 				profile.rank = req.body.rank;
 				profile.image = req.body.image;
 				profile.resume = req.body.resume;
-                // User Story #1144
-                profile.skillItem = req.body.skillItem;                
+                if (req.body.piDenial)
+                {
+                    profile.piDenial = req.body.piDenial;
+                }
+                
+				// User Story #1144
+                profile.skillItem = req.body.skillItem;
                 // this field will be set to true if the acceptProfile() function called us
                 if (req.body.piApproval)
                 {
@@ -391,6 +396,31 @@ module.exports = function(app, express) {
 						}
 					);
                 }
+                // User Story #1140
+                if (req.body.__v == 4)
+                {
+                	profile.piDenial = false;
+                	profile.isDecisionMade = false;
+                	profile.piApproval = false;
+
+					var vm = {};
+					vm.userData = {};
+					var host = req.get('host');
+					var postDomain = "http://" + "127.0.0.1:3000" + "/vip/nodeemail2";
+					vm.objectId = profile.objectId;
+					vm.userData.recipient = profile.email;
+					vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\nCurrently, Your profile has been kept on HOLD! by the admin. You will be informed if admin approves or rejects your account. Sorry for the inconvenience";
+					vm.userData.subject = "Your VIP Account has been kept on HOLD!";
+					request.post(
+						postDomain,
+						{ form: { vm } },
+						function (error, response, body) {
+							if (!error && response.statusCode == 200) {
+							}
+
+						}
+					);
+                }
 
 				// update profile, "Rank" and "userType" changes will be handled below this, it's impossible to update those values here
 				// request values will be populated in the DB here
@@ -523,7 +553,20 @@ module.exports = function(app, express) {
                 return res.json(profile);
             });
         });
-
+// User Story #1140
+    apiRouter.route('/reviewuser/:user_id')
+        .get(function (req, res) {
+            Profile.findById(req.params.user_id, function(err, profile) {
+                if (profile == null) {
+                    res.json('Invalid link. User cannot be verified.');
+                    return;
+                }
+                else {
+                    res.json(profile);
+                }
+            });
+        });
+		
 	//route for adding a member to a project(after approval)
 		apiRouter.route('/reviewusers/:userid/:pid')
 		.put(function (req, res) {

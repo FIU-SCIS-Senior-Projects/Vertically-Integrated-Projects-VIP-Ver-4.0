@@ -2,12 +2,13 @@ var mongoose    = require('mongoose');
 var Schema      = mongoose.Schema;
 
 var LogSchema = new Schema({
+	// User Story #1140
 	projectid: {type: String, required: false},
-	student: {type: String, required: true},
+	student: {type: String, required: false},
 	firstName: {type: String, required: false},
 	lastName: {type: String, required: false},
 	fullName: {type: String, required: false},
-	studentemail: {type: String, required: true},
+	studentemail: {type: String, required: false},
 	selectProject: {type: String, required: false},
 	description: {type: String, required: false},
 	image: {type: String, required: false},
@@ -18,11 +19,15 @@ var LogSchema = new Schema({
 	department : { type: String, required: false},	
 	college : { type: String, required: false},	
 	major : { type: String, required: false},	//End of Rev Student Application fields
-	action: {type: String, required: true}, //Accept or Reject
-    type: {type: String, required: true}, //Ex: Review Project Proposal or Review Student Application
+	action: {type: String, required: false}, //Accept or Reject
+    type: {type: String, required: false}, //Ex: Review Project Proposal or Review Student Application
     time: {type: Date, default: Date.now},
-    // User Story #1144
-    skillItem: {type: String, required: false}
+	// User Story #1144
+    skillItem: {type: String, required: false},
+    // User Story #1140
+    faculty: {type: String, required: false},
+    facultyemail: {type: String, required: false},
+    rank: {type: String, required: false}
 	
 });
 
