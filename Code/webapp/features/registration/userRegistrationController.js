@@ -292,16 +292,18 @@ angular
 
 					// send email to PI for approval
 					vm.userData.recipient2 = "mtahe006@fiu.edu,jgonz770@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
-
+					
+					// User Story #1140
 					vm.userData.text2 = "Dear PI/CoPI,"+
-						vm.userData.firstName + " " + vm.userData.lastName + " is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/" + vm.objectId +"";
+						vm.userData.firstName + " " + vm.userData.lastName + " is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/";
 					vm.userData.subject2 = vm.userData.firstName + " " + vm.userData.lastName + " is attempting to Register a New Account";
 
 					User.nodeEmail(vm.userData);
 					
 					//Create todo for PI validation.
 					
-					var todo = {owner: "Pi/CoPi", todo: vm.userData.firstName + " has registered an account. Please CoPI validate his account.", type: "user", link: "http://" + host + "/#/verifyuser/" + vm.objectId };
+					// User Story #1140
+					var todo = {owner: "Pi/CoPi", todo: vm.userData.firstName + " has registered an account. Please CoPI validate his account.", type: "user", link: "http://" + host + "/#/verifyuser/"};
 					
 					ToDoService.createTodo(todo).then(function(success)  {
 						

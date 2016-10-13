@@ -41,6 +41,12 @@
             },
             {
                 name: 'Active Projects',
+            },
+			{
+                name: 'Proposed Date (New-Old)',
+            },
+            {
+                name: 'Proposed Date (Old-New)',
             }
         ];
         
@@ -110,7 +116,43 @@
                 case 'Show All Projects':
                     vm.filteredprojects = vm.projects;
                     break;
-                
+					
+                case 'Proposed Date (Old-New)':
+                    var tempProj = [];
+                    tempProj = vm.projects;
+                    tempProj.sort(function(a, b)
+                    {
+                        var c = new Date(a.proposedDate);
+                        var d = new Date(b.proposedDate);
+                        return c-d;
+                    });
+                    tempProj.forEach(function (obj){
+                        if(obj.proposedDate){
+                        obj.proposedDate = new Date(obj.proposedDate);
+                        }
+                    });
+                    
+                    vm.filteredprojects = tempProj;
+                    break;  
+                    
+                case 'Proposed Date (New-Old)':
+                    var tempProj = [];
+                    tempProj = vm.projects;
+                    tempProj.sort(function(a, b)
+                    {
+                        var c = new Date(a.proposedDate);
+                        var d = new Date(b.proposedDate);
+                        return d-c;
+                    });
+                    tempProj.forEach(function (obj){
+                        if(obj.proposedDate){
+                        obj.proposedDate = new Date(obj.proposedDate);
+                        }
+                    });
+                    
+                    vm.filteredprojects = tempProj;
+                    break;
+					
                 default:
                     alert('no filter for this option');
                     //$location.url('/#en');

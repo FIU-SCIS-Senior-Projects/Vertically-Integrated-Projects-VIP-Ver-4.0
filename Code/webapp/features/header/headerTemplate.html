@@ -6,8 +6,8 @@
 	    <i class="fa fa-list-alt task-icon" aria-hidden="true"></i>
 	    <span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span>
     </a>
-
-    <a class="task-icons" ng-show="header.user_type == 'Pi/CoPi' && header.logged_in" ui-sref="admin">
+	<!-- User Story 1160-->
+    <a class="task-icons" ng-show="header.user_type == 'Pi/CoPi' && header.logged_in" ui-sref="admin" title="Admin Panel">
 		  <i style="color: #081E3F; cursor: pointer;" class="fa fa-wrench" aria-hidden="true"></i>
 	</a>
 
@@ -71,6 +71,8 @@
                         -->
                                 <li><a ng-show="header.user_type == 'Student'|| header.user_type == 'Pi/CoPi'" ui-sref="studentconfirminfo">APPLY</a></li>
 								<li><a ng-show="header.user_type == 'Staff/Faculty' || header.user_type == 'Pi/CoPi'" ui-sref="reviewuser">REVIEW STUDENT APPLICATIONS</a></li>
+								<!-- User Story #1140 -->
+								<li><a ng-show="header.user_type == 'Pi/CoPi'" ui-sref="verifyuser">REVIEW FACULTY REGISTRATIONS</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

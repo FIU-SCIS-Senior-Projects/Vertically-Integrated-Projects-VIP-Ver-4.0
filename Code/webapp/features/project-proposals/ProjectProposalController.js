@@ -60,7 +60,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 $scope.done = true;
             }
 		});
-
+		
+		//Joe Use Story
+		vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+		
         $scope.colleges= [
             {
                 name: 'Architecture & The Arts',
@@ -190,6 +193,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         vm.description = "";
         vm.disciplines = [];
         vm.editingMode = false;
+		//Joe Use Story
+		vm.semester = [];
         //$scope.project.submit = submit;
 		
 		var faculty;
@@ -256,8 +261,30 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         }
 
         $scope.save = function save() {
-
+		//Use Story #849
 			// loading();
+			var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+            var seconds = today.getSeconds();
+
+            if(dd<10) {
+            dd='0'+dd
+            } 
+
+            if(mm<10) {
+            mm='0'+mm
+            } 
+
+            if(minutes < 10){
+                minutes ="0"+minutes;
+            }
+
+            today = mm+'/'+dd+'/'+yyyy+'/'+hours+':'+minutes+':'+seconds;
+			$scope.project.proposedDate = today;
 			
 			updateFaculty();
 			updateMentor();

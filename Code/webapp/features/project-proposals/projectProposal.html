@@ -10,6 +10,15 @@
             <label>*Team Title</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
         </div>
+		
+		<tr>
+                        <td colspan="4">
+
+                            <label>*Semester:</label>
+                            <select  ng-model="project.Semester" ng-options="semester for semester in vm.semester" class="form-control" Required="True">
+                            </select>
+                        </td>
+                    </tr>
 
         <div class="form-group" hidden>
             <label>Team Image:</label>
@@ -105,6 +114,13 @@
             <label>*Skill Item:</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.reqskillItem" required/>
         </div>
+		
+		<!-- User Story #849 -->
+		<div class="form-group" hidden>
+            <label>Proposed Date:</label>
+            <input type="Date" class="form-control" placeholder="" ng-model="project.proposedDate" required="False">
+        </div>
+		
         <h4><strong>* : required fields</strong></h4>
         <br>
        <p><h5>Click to expand</h5></p>
