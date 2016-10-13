@@ -392,7 +392,33 @@ module.exports = function(app, express) {
 						}
 					);
                 }
+// User Story #1140
+                if (req.body.__v == 4)
+                {
+                	profile.piDenial = false;
+                	profile.isDecisionMade = false;
+                	profile.piApproval = false;
 
+					var vm = {};
+					vm.userData = {};
+					var host = req.get('host');
+					var postDomain = "http://" + "127.0.0.1:3000" + "/vip/nodeemail2";
+					vm.objectId = profile.objectId;
+					vm.userData.recipient = profile.email;
+					vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\nCurrently, Your profile has been kept on HOLD! by the admin. You will be informed if admin approves or rejects your account. Sorry for the inconvenience";
+					vm.userData.subject = "Your VIP Account has been kept on HOLD!";
+					request.post(
+						postDomain,
+						{ form: { vm } },
+						function (error, response, body) {
+							if (!error && response.statusCode == 200) {
+							}
+
+						}
+					);
+                }
+
+				
 				// update profile, "Rank" and "userType" changes will be handled below this, it's impossible to update those values here
 				// request values will be populated in the DB here
 				profile.save(function(err){
@@ -525,6 +551,20 @@ module.exports = function(app, express) {
             });
         });
 
+	// User Story #1140
+    apiRouter.route('/reviewuser/:user_id')
+        .get(function (req, res) {
+            Profile.findById(req.params.user_id, function(err, profile) {
+                if (profile == null) {
+                    res.json('Invalid link. User cannot be verified.');
+                    return;
+                }
+                else {
+                    res.json(profile);
+                }
+            });
+        });	
+		
 	//route for adding a member to a project(after approval)
 		apiRouter.route('/reviewusers/:userid/:pid')
 		.put(function (req, res) {

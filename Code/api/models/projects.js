@@ -33,9 +33,14 @@ var ProjectSchema = new Schema({
     youtube_url: String,
     github_url: String,
     drive_url: String,
+	archive_url: String,
     term: { type: String, default: 1 },
 	 // User Story #1144
-    reqskillItem: {type: String}
+    reqskillItem: {type: String},
+	//Joe UserStory
+	Semester: String,
+		//Userstory 849
+    proposedDate: Date
 });
 
 module.exports = mongoose.model('Projects', ProjectSchema);
