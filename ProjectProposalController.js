@@ -60,7 +60,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 $scope.done = true;
             }
 		});
-
+		
+		//Joe Use Story
+		vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+		
         $scope.colleges= [
             {
                 name: 'Architecture & The Arts',
@@ -131,6 +134,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 ]
             },
             {
+                name: 'Honors College',
+                schools: []
+            },
+            {
                 name: 'Journalism and Mass Communication',
                 schools: [
                     'Advertising and Public Relations',
@@ -187,9 +194,11 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         
         vm.title = "";
         vm.image = "";
-        vm.description = "";
+        vm.description = null;
         vm.disciplines = [];
         vm.editingMode = false;
+		//Joe Use Story
+		vm.semester = null;
         //$scope.project.submit = submit;
 		
 		var faculty;
@@ -254,24 +263,50 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				
             });
         }
+// User Story #1175
+        function checkrequired(){
+         if( ($scope.project.description != null) )
+            {
+                return 1;
+            }
+            return 0;
+            }
+
 
         $scope.save = function save() {
-
+		//Use Story #849
 			// loading();
 
-			if(($scope.project.title=="")){
-				MissingFields();
-				return;
-			}
-			// User Story #1144
-			if(($scope.project.reqskillItem=="")){
-				MissingFields();
-				return;
-			}
-			if(document.getElementById('projdescription').value==''){
-				MissingFields();
-				return;
-			}
+			var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+            var seconds = today.getSeconds();
+
+            
+
+            if(dd<10) {
+            dd='0'+dd
+            } 
+
+            if(mm<10) {
+            mm='0'+mm
+            } 
+
+            if(minutes < 10){
+                minutes ="0"+minutes;
+            }
+
+            today = mm+'/'+dd+'/'+yyyy+'/'+hours+':'+minutes+':'+seconds;
+			$scope.project.proposedDate = today;
+
+// User Story #1175
+if(!checkrequired()){
+FacultyMissingFields();
+return;
+}
 			
 			updateFaculty();
 			updateMentor();
@@ -322,7 +357,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 								recipient: profile.email, 
 								text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 								subject: "Project Proposal Submission Pending", 
-								recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
+								recipient2: "jgonz770@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
 								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
 								subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
 							};
@@ -371,7 +406,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 								recipient: profile.email, 
 								text: "Dear " + profile.firstName + ", please be patient while the edits that you have proposed for the project " + $scope.project.title + " are reviewed. Once a decision has been made to approve/reject your edits, you will be notified again via email.\n\nProject:" + $scope.project.title + "\nStatus: Modified-PendingReview" , 
 								subject: "Proposed Edits for " + $scope.project.title + " are being Reviewed", 
-								recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",
+								recipient2: "jgonz770@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",
 								subject2: "Faculty Has Edited the Existing Project " + $scope.project.title,
 								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has edited the existing project " + $scope.project.title +  ". Please review the edits to the project, and approve/deny the project by visiting the following link - http://vip.fiu.edu/#/reviewproject/"
 							};
@@ -410,16 +445,19 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             }
             );
 		}
-				function MissingFields() {
-			swal({   
-               title: 'Almost There!',
-			   text: 'Please double check and make sure you have filled in all of the required information in the form.',
-			   html: true,
-			   timer: 10000,
-			   showConfirmButton: true
-            }
-            );
-		}
+        
+// User Story #1175
+        function FacultyMissingFields() {
+        swal({   
+        title: 'Almost There!',
+        text: 'Please Enter the Description of your Project.',
+        html: true,
+        timer: 10000,
+        showConfirmButton: true
+        }
+        );
+        }
+		
 		 function error_msg()
          {
             swal({   

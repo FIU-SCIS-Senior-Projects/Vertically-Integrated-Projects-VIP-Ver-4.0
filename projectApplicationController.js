@@ -82,6 +82,10 @@ angular
 						]
 					},
 					{
+						name: 'Honors College',
+						schools: []
+					},
+					{
 						name: 'Journalism and Mass Communication',
 						schools: [
 							'Advertising and Public Relations',
@@ -147,7 +151,7 @@ angular
 				vm.rank = data.rank;
 				vm.school = data.department;
 				vm.college = data.college;
-				vm.semester = data.semester;
+				vm.semester = null;
 				vm.google = data.google;
 				vm.profile = data;
 				
@@ -174,7 +178,7 @@ angular
 					//alert(vm.id);
                     vm.id = $stateParams.id;
                     getProjectById(vm.projects);
-                } else {
+                    } else {
                     vm.sProject = null;
                     //alert($stateParams.id);
                     //alert(vm.id);
@@ -228,6 +232,7 @@ angular
             // processes project application, if the user is not a guest
 			if (!$scope.guest)
             {
+               /*
                 // if the user is a student
                 if (vm.profile.userType == "Student")
                 {
@@ -242,7 +247,7 @@ angular
                      console.log("vm.rank = " + vm.rank + ", vm.profile.rank = " + vm.profile.rank);
                      console.log("vm.pID = " + vm.pID + ", vm.profile.pantherID = " + vm.profile.pantherID);
                      console.log("vm.selectedCollege = " + vm.selectedCollege + ", vm.profile.college = " + vm.profile.college);
-                }
+                }*/
                 
                 // note:
                 // vm = FormData (data provided in submitted form)
@@ -279,12 +284,21 @@ angular
                     console.log("5");
                     vm.profile.gender = vm.gender;
                 }
-                // User Story #1144
+				 // User Story #1144
                 if (vm.profile.skillItem != vm.skillItem)
                 {
                     console.log("6");
                     vm.profile.skillItem = vm.skillItem;
                 }
+// User Story #1175
+var collegename = vm.selectedCollege.name;
+if(vm.school == "None" || vm.school== undefined){
+if(collegename != "Honors College")
+{
+EnterDepartment();
+return false;
+}
+}
                 console.log("vm.profile.pantherID = " + vm.profile.pantherID + ", vm.pID = " + vm.pID);
                 
                 //f (vm.user_type != 
@@ -347,7 +361,7 @@ angular
 								recipient: profile.email, 
 								text: "Dear " + profile.firstName + " " + profile.lastName + ", thank you for applying to " + project.title + ", as either a faculty or mentor please register an account using the same email as soon as possible so people who are signed into the website can see your profile.\n\nProject: " + project.title + "\nStatus: Approved", 
 								subject: "Faculty/Mentor Application Successfull", 
-								recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
+								recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,jgonz770@fiu.edu,vlalo001@fiu.edu", 
 								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project as a mentor or faculty you can remove this person off the project if he or she isn't authorized to join project.", 
 								subject2: "Faculty/Mentor has joined " + project.title 
 							};
@@ -397,7 +411,7 @@ angular
 								recipient: profile.email, 
 								text: "Dear " + profile.firstName + ", thank you for applying to " + project.title + " you are currently pending and this is just a confirmation that you applied to the project please keep checking the VIP to-do or your email as the PI will approve or deny your request to join the project.\n\nProject: " + project.title + "\nStatus: Pending", 
 								subject: "Project Application Submission Pending", 
-								recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
+								recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,jgonz770@fiu.edu,vlalo001@fiu.edu", 
 								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project " + project.title + ". Please approve him/her by going to http://vip.fiu.edu/#/reviewuser.", 
 								subject2: "New Student Applied Has Applied To " + project.title 
 							};
@@ -488,7 +502,7 @@ angular
 							recipient: vm.email2, 
 							text: "Dear " + vm.name + ", thank you for applying to " + project.title + ", as either a faculty or mentor please register an account using the same email as soon as possible so people who are signed into the website can see your profile.\n\nProject: " + project.title + "\nStatus: Approved", 
 							subject: "Faculty/Mentor Application Successfull", 
-							recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
+							recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,jgonz770@fiu.edu,vlalo001@fiu.edu", 
 							text2: "Dear PI, " + vm.name  + " has applied to project as a mentor or faculty you can remove this person off the project if he or she isn't authorized to join project.", 
 							subject2: "Faculty/Mentor has joined " + project.title 
 						};
@@ -530,7 +544,17 @@ angular
             }
             );
 		}
-		
+	// User Story #1175
+    function EnterDepartment() {
+    swal({   
+    title: 'Almost There!',
+    text: 'Please Enter School/Department details.',
+    html: true,
+    timer: 10000,
+    showConfirmButton: true
+    }
+    );
+    }
 		function msg(title, text) {
 			swal({   
                 title: title,   

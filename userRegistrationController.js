@@ -119,6 +119,10 @@ angular
                 ]
             },
             {
+                name: 'Honors College',
+                schools: []
+            },
+            {
                 name: 'Journalism and Mass Communication',
                 schools: [
                     'Advertising and Public Relations',
@@ -211,7 +215,8 @@ angular
             // convert email to lower case
             var inputEmail = vm.userData.email;
             vm.userData.email = inputEmail.toLowerCase();
-
+            // User Story #1175
+           var collegename = vm.userData.college.name;
             // call email validation function
             if(!email_validation(vm.userData.email,vm.userData.userType.name))
             {
@@ -240,9 +245,10 @@ angular
 			   return; // invalid panther id, return to form
 			}
 
-            if (!gender_validation(vm.userData.gender))
+           if (vm.userData.gender == undefined)
             {
-                return; // go back to from
+                alert("Please select a gender.");
+                return false;
             }
 
             if (vm.userData.college == undefined)
@@ -251,13 +257,15 @@ angular
                 return false;
             }
 
-
-            if (vm.userData.department == undefined)
+            // User Story #1175
+            if(vm.userData.department == undefined){
+            if(collegename != "Honors College")
             {
-                alert("Please select your Department.");
-                return false;
-            }
+               alert("Please select your Department.");
+               return false;
 
+             }
+            }
             //END OF FORM INPUT VALIDATION FUNCTIONS //
 
             //alert("Seems all validation checks passed");
@@ -292,7 +300,8 @@ angular
 
 					// send email to PI for approval
 					vm.userData.recipient2 = "mtahe006@fiu.edu,jgonz770@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
-                    // User Story #1140
+					
+					// User Story #1140
 					vm.userData.text2 = "Dear PI/CoPI,"+
 						vm.userData.firstName + " " + vm.userData.lastName + " is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/";
 					vm.userData.subject2 = vm.userData.firstName + " " + vm.userData.lastName + " is attempting to Register a New Account";
@@ -300,6 +309,7 @@ angular
 					User.nodeEmail(vm.userData);
 					
 					//Create todo for PI validation.
+					
 					// User Story #1140
 					var todo = {owner: "Pi/CoPi", todo: vm.userData.firstName + " has registered an account. Please CoPI validate his account.", type: "user", link: "http://" + host + "/#/verifyuser/"};
 					

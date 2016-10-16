@@ -5,23 +5,25 @@
             <table class="table">
                 <tr>
                     <td>
-                        <input class="form-control" placeholder="First Name" type="text"
-                               ng-model="regCtlr.userData.firstName">
+
+                        <!-- User Story #1175 -->
+                        <input class="form-control" placeholder="*First Name" type="text"
+                               ng-model="regCtlr.userData.firstName" required>
 
                     </td>
-                    <td>
-                        <input class="form-control" placeholder="Last Name" type="text"
-                               ng-model="regCtlr.userData.lastName"></input>
+                    <td><!-- User Story #1175 -->
+                        <input class="form-control" placeholder="*Last Name" type="text"
+                               ng-model="regCtlr.userData.lastName" required></input>
                     </td>
                 </tr>
-              <tr>
-                    <td colspan="4"><input class="form-control" placeholder="Email" type="text"
-                                           ng-model="regCtlr.userData.email"></input></td>
+              <tr><!-- User Story #1175 -->
+                    <td colspan="4"><input class="form-control" placeholder="*Email" type="text"
+                                           ng-model="regCtlr.userData.email" required></input></td>
                 </tr>
 
-                <tr>
-                    <td colspan="4"><input class="form-control" placeholder="Password" type="password"
-                                           ng-model="regCtlr.userData.password"></input>
+                <tr><!-- User Story #1175 -->
+                    <td colspan="4"><input class="form-control" placeholder="*Password" type="password"
+                                           ng-model="regCtlr.userData.password" required ></input>
                                             <div class="alert alert-info">
                                                 <p>
                                                     <b>Please Note:</b> Password must have at least 8 characters and include:
@@ -39,40 +41,41 @@
                                            
                                            </td>
                 </tr>
-                <tr>
-                    <td colspan="4"><input class="form-control" placeholder="Confirm Password" type="password"
-                                           ng-model="regCtlr.userData.passwordConf"></input></td>
+                <tr><!-- User Story #1175 -->
+                    <td colspan="4"><input class="form-control" placeholder="*Confirm Password" type="password"
+                                           ng-model="regCtlr.userData.passwordConf" required></input></td>
                 </tr>
                 <tr>
-                    <td>
-                        <label>User Type:</label>
+                    <td><!-- User Story #1175 -->
+                        <label>*User Type:</label>
                         <div>
-                            <select ng-change="regCtlr.onchange(regCtlr.userData.userType.name)"  class = 'form-control'  ng-model="regCtlr.userData.userType" ng-options="user as user.name for user in regCtlr.Users">
+                            <select ng-change="regCtlr.onchange(regCtlr.userData.userType.name)"  class = 'form-control'  ng-model="regCtlr.userData.userType" ng-options="user as user.name for user in regCtlr.Users" required><option></option>
                             </select>
                         </div><br>
 
                     </td>
-                    <td>
-                        <label>Rank:</label>
+                    <td><!-- User Story #1175 -->
+                        <label>*Rank:</label>
                         <div>
-                            <select class = "form-control" ng-model="regCtlr.userData.rank" ng-options="rank for rank in regCtlr.userData.userType.ranks">
+                            <select class = "form-control" ng-model="regCtlr.userData.rank" ng-options="rank for rank in regCtlr.userData.userType.ranks" required><option></option>
                             </select>
                         </div>
                 </tr>
                 <tr>
-                    <td>
-                        <label>Panther ID:</label>
+                    <td><!-- User Story #1175 -->
+                        <label>*Panther ID:</label>
 
                         <div>
-                            <input class = "form-control" placeholder = "123456" type="text" ng-model="regCtlr.userData.pantherID" />
+                            <input class = "form-control" placeholder = "123456" type="text" ng-model="regCtlr.userData.pantherID" required />
                         </div>
 
                     </td>
                     <td>
-
-                        <label>Gender:</label>
+                        <!-- User Story #1175 -->
+                        <label>*Gender:</label>
                     <div>
-                        <select  class = "form-control"ng-model="regCtlr.userData.gender">
+                        <select  class = "form-control"ng-model="regCtlr.userData.gender" required >
+                            <option></option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
                         </select>
@@ -81,27 +84,29 @@
 
                 <tr>
                     <td colspan="4">
-
-                            <label>College:</label>
-                            <select class = 'form-control' ng-model="regCtlr.userData.college" ng-options="college as college.name for college in regCtlr.Colleges" >
+                            <!-- User Story #1175 -->
+                            <label>*College:</label>
+                            <select class = 'form-control' ng-model="regCtlr.userData.college" ng-options="college as college.name for college in regCtlr.Colleges" required ><option></option>
                             </select>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4">
-
+                        <!-- User Story #1175 -->
                         <label>School/Department:</label>
-                        <select class = 'form-control' ng-model="regCtlr.userData.department" ng-options=" school for school in regCtlr.userData.college.schools" >
+                        <select class = 'form-control' ng-model="regCtlr.userData.department" ng-options=" school for school in regCtlr.userData.college.schools"><option></option>
                         </select>
 
                     </td>
                 </tr>
 
             </table>
-
+            <!-- User Story #1175 -->
+            <h4><strong>* : required fields</strong></h4>
+            <br>
             <div align="center">
                 <button style= "width: 150px;" type="submit" class="btn btn-primary btn-block">
-                <!-- User Story #1140 -->    <i class="fa fa-lg fa-user-plus"></i> Create Account
+                    <!-- User Story #1140 -->    <i class="fa fa-lg fa-user-plus"></i> Create Account
                 </button>
 
 
