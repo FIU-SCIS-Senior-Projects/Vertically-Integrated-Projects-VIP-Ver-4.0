@@ -24,6 +24,10 @@
                         <label>Skills required:</label>
                         {{vm.data.reqskillItem}}
                     </p>
+					<p>
+                        <label>Semester:</label>
+                        {{vm.data.semester}}
+                    </p>
             </div>
         </div>
 
@@ -42,6 +46,9 @@
 			</a>
 			<a href="{{vm.data.mingle_url}}" ng-hide="!(vm.data.mingle_url)" title="Mingle">
 			<i class="fa fa-medium social-icon" style="margin-left: 10px;" aria-hidden="true"></i>
+			</a>
+			<a href="{{vm.data.archive_url}}" ng-hide="!(vm.data.archive_url)" title="Previous Semester's Project">
+			<i class="fa fa-hourglass social-icon" style="margin-left: 10px;" aria-hidden="true"></i>
 			</a>
              <hr>
                 <h4>Project Owners</h4>

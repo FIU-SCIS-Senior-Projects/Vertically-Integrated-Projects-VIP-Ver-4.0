@@ -127,7 +127,7 @@ angular
 				];
 
 				vm.genders = ['Male', 'Female'];
-				vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+				vm.semesters = ['Spring 2017', 'Summer 2017'];
 
 				vm.selectedCollege = vm.Colleges.find(function (element) {
 					return element.name === data.college;
@@ -286,6 +286,15 @@ angular
                     vm.profile.skillItem = vm.skillItem;
                 }
 
+				// User Story #1175
+				var collegename = vm.selectedCollege.name;
+				if(vm.school == "None" || vm.school== undefined){
+					if(collegename != "Honors College")
+					{
+						EnterDepartment();
+						return false;
+					}
+				}
                 console.log("vm.profile.pantherID = " + vm.profile.pantherID + ", vm.pID = " + vm.pID);
                 
                 //f (vm.user_type != 
@@ -531,6 +540,17 @@ angular
             }
             );
 		}
+		// User Story #1175
+		function EnterDepartment() {
+			swal({   
+			title: 'Almost There!',
+			text: 'Please Enter School/Department details.',
+			html: true,
+			timer: 10000,
+			showConfirmButton: true
+			}
+		);
+    }
 		
 		function msg(title, text) {
 			swal({   

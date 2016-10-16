@@ -211,7 +211,8 @@ angular
             // convert email to lower case
             var inputEmail = vm.userData.email;
             vm.userData.email = inputEmail.toLowerCase();
-
+			// User Story #1175
+           var collegename = vm.userData.college.name;
             // call email validation function
             if(!email_validation(vm.userData.email,vm.userData.userType.name))
             {
@@ -257,7 +258,15 @@ angular
                 alert("Please select your Department.");
                 return false;
             }
+			// User Story #1175
+            if(vm.userData.department == undefined){
+            if(collegename != "Honors College")
+            {
+               alert("Please select your Department.");
+               return false;
 
+             }
+            }
             //END OF FORM INPUT VALIDATION FUNCTIONS //
 
             //alert("Seems all validation checks passed");

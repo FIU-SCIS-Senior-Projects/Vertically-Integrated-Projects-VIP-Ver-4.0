@@ -196,14 +196,14 @@
 					</tr>
 					<tr>
 						<th>
-							<select  class="form-control" ng-model="selectedProject" ng-options="projects as projects.LockStatus for projects in vm.projects" value="{{vm.currentProject(LockStatus)}}"></select>
+							<select  class="form-control" ng-model="projects.status" ng-options="projects as projects for projects in vm.status" value="{{vm.currentProject(selectedProject)}}"></select>
 						</th>
 					</tr>
 					</table>
 					<table class="table" style="height: 1px;">
 					<tr>
 						<th>
-								<button style= "width: 80px;" ng-click="vm.sw()" class="btn btn-success btn-block">Change</button>
+								<button style= "width: 80px;" ng-click="vm.se(vm.currentProject)" class="btn btn-success btn-block">Change</button>
 						</th>
 						<th>
 								<button style= "width: 80px;" ng-click="vm.sc()" class="btn btn-success btn-danger">Clear</button>

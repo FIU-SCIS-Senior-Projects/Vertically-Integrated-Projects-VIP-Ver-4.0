@@ -62,7 +62,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		});
 		
 		//Joe Use Story
-		vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+		vm.semesters = ['Spring 2017', 'Summer 2017'];
 		
         $scope.colleges= [
             {
@@ -134,6 +134,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 ]
             },
             {
+                name: 'Honors College',
+                schools: []
+            },
+            {
                 name: 'Journalism and Mass Communication',
                 schools: [
                     'Advertising and Public Relations',
@@ -190,11 +194,11 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         
         vm.title = "";
         vm.image = "";
-        vm.description = "";
+        vm.description = null;
         vm.disciplines = [];
         vm.editingMode = false;
 		//Joe Use Story
-		vm.semester = [];
+		vm.semester = null;
         //$scope.project.submit = submit;
 		
 		var faculty;
@@ -259,10 +263,20 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				
             });
         }
+// User Story #1175
+        function checkrequired(){
+         if( ($scope.project.description != null) )
+            {
+                return 1;
+            }
+            return 0;
+            }
+
 
         $scope.save = function save() {
 		//Use Story #849
 			// loading();
+
 			var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth()+1; //January is 0!
@@ -270,6 +284,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             var hours = today.getHours();
             var minutes = today.getMinutes();
             var seconds = today.getSeconds();
+
+            
 
             if(dd<10) {
             dd='0'+dd
@@ -285,6 +301,12 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
             today = mm+'/'+dd+'/'+yyyy+'/'+hours+':'+minutes+':'+seconds;
 			$scope.project.proposedDate = today;
+
+// User Story #1175
+if(!checkrequired()){
+FacultyMissingFields();
+return;
+}
 			
 			updateFaculty();
 			updateMentor();
@@ -423,6 +445,18 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             }
             );
 		}
+        
+// User Story #1175
+        function FacultyMissingFields() {
+        swal({   
+        title: 'Almost There!',
+        text: 'Please Enter the Description of your Project.',
+        html: true,
+        timer: 10000,
+        showConfirmButton: true
+        }
+        );
+        }
 		
 		 function error_msg()
          {

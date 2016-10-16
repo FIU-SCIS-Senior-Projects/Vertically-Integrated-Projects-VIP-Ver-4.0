@@ -32,7 +32,14 @@ angular.module('ProjectProposalService', [])
                console.log("Deleting response just arrived");
             });;
         };
-		
+		//Joe User Story
+		/*projectFactory.getTermData = function() {
+			return $http.get('api/terms/').then(function(data){
+				console.log("Got the Term Data");
+				return data.data;
+				
+			});
+		} */
 		
         return projectFactory;
     });

@@ -39,6 +39,7 @@
 		vm.ConfirmUser = ConfirmUser;
 		vm.RejectUser = RejectUser;
 		
+		
 		//Out of scope functions
 		vm.userTypeChange = userTypeChange;
 		vm.userChange = userChange;
@@ -56,8 +57,12 @@
 		vm.sw = ChangeUserProject;
 		vm.sc = ClearProject;
 		
-        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student', 'Undefined'];
+		//Joe's User Story
+		vm.se = ChangeProjectStatus;
 		
+        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student', 'Undefined'];
+		//Joe's User Story
+		vm.status = ['Active','Inactive'];
 		vm.getProjectTitle = function (email) {
 			if (email) {
 				if (vm.projects) {
@@ -506,7 +511,20 @@
             }
             );
         };
-		
+				function changestat_msg()
+         {
+            swal({   
+                title: "Project Status Has Changed",   
+                text: "Project's status has been changed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+			
+            }
+            );
+        };
 		function changeclear_msg()
          {
             swal({   
@@ -554,6 +572,29 @@
 				}
 				changepro_msg();
 			}
+		};
+		//Joe's User Story Not yet working
+		function ChangeProjectStatus(projectInfo)
+		{
+			//Get the project info based on the title being passed
+			//Change status
+			//Update DB
+			console.log(projectInfo);
+			var project = vm.cproject;
+			var LockStatus = vm.status;
+			
+			if(project && LockStatus){
+			var selectedProject;
+			for(i = 0; i < vm.projects.length; i++) {
+					if (vm.projects[i].title.includes(selectedProject)) {
+						selectedProject = vm.projects[i];
+					}
+				}
+			project.status = "Inactive";
+			ProjectService.editProject(selectedProject, (selectedProject.status = LockStatus));
+			}
+			changestat_msg();
+			
 		};
 		
 		//Remove a user from a project
