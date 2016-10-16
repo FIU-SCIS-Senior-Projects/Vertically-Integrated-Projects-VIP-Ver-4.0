@@ -10,6 +10,15 @@
             <label>*Team Title</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
         </div>
+		
+		<tr>
+                        <td colspan="4">
+
+                            <label>*Semester:</label>
+                            <select  ng-model="project.semester" ng-options="semester for semester in project.semesters" class="form-control" Required="True">
+                            </select>
+                        </td>
+                    </tr>
 
         <div class="form-group" hidden>
             <label>Team Image:</label>
@@ -34,8 +43,7 @@
             <label>Link to your YouTube page</label>
             <input type="text" ng-model="project.youtube_url" class="form-control"/>
         </div>
-
-        <!-- User Story #1142-->
+         <!-- User Story #1142-->
         <div class="form-group">
             <label>*Team Description:</label>
             <!-- <div text-angular ng-model="project.description"></div> -->
@@ -87,15 +95,32 @@
             <input type="text" ng-model="project.drive_url" class="form-control" />
         </div>
 
+		<div class="form-group">
+            <label>Mingle link</label>
+            <input type="text" ng-model="project.mingle_url" class="form-control" />
+        </div>
+		
         <div class="form-group">
             <label>Minimum number of students:</label>
-            <input type="number"  class="form-control" placeholder="" ng-model="project.firstSemester">
+            <input type="number" min="0" class="form-control" placeholder="" ng-model="project.firstSemester" required="False">
         </div>
 
         <div class="form-group">
             <label>Maximum number of students per semester:</label>
-            <input type="number"  class="form-control" placeholder="" ng-model="project.maxStudents">
+            <input type="number" min="0" class="form-control" placeholder="" ng-model="project.maxStudents" required="False">
+		</div>
+			<!-- User Story #1144 -->
+        <div class="form-group">
+            <label>*Skill Item:</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.reqskillItem" required/>
         </div>
+		
+		<!-- User Story #849 -->
+		<div class="form-group" hidden>
+            <label>Proposed Date:</label>
+            <input type="Date" class="form-control" placeholder="" ng-model="project.proposedDate" required="False">
+        </div>
+		
         <h4><strong>* : required fields</strong></h4>
         <br>
        <p><h5>Click to expand</h5></p>
