@@ -38,7 +38,7 @@ var ProjectSchema = new Schema({
 	 // User Story #1144
     reqskillItem: {type: String},
 	//Joe UserStory
-	Semester: String,
+	semester: String,
 		//Userstory 849
     proposedDate: Date
 });

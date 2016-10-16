@@ -13,17 +13,25 @@ module.exports = function(app, express) {
     ////console.log("Seed file start");
     var termsSeed = [
         {
-            name: "Spring",
-            start: new Date(2016, 01),
-            end: new Date(2016, 05),
-            deadline: new Date(2016, 01),
+            name: "Spring 2017",
+            start: new Date(2017, 01),
+            end: new Date(2017, 05),
+            deadline: new Date(2017, 01),
             active: true
         },
         {
-            name: "Summer",
-            start: new Date(2016, 05),
-            end: new Date(2016, 08),
-            deadline: new Date(2016, 05),
+            name: "Summer 2017",
+            start: new Date(2017, 05),
+            end: new Date(2017, 08),
+            deadline: new Date(2017, 05),
+            active: false
+        },
+		//Joe User Story
+		{
+            name: "Fall 2016",
+            start: new Date(2016, 08),
+            end: new Date(2016, 12),
+            deadline: new Date(2016, 08),
             active: false
         }
     ];
@@ -239,7 +247,7 @@ module.exports = function(app, express) {
             ////console.log("Looking for projs");
         
             Project.find({$or:[{ term: currentTerm[0]._id, status: "pending" }, { term: currentTerm[0]._id, status: "modified" }]}, function (err, projects) {
-
+			
                 if(err) {
                     ////console.log(err);
                     return res.send('error');
@@ -247,7 +255,17 @@ module.exports = function(app, express) {
                 return res.json(projects);
             });
         });
-	
+		//Joe User Story
+	/*apiRouter.route('/findTerm')
+		.get(function (req, res) {
+			
+			Term.find(), function (err, terms){
+				if(err) {
+					return res.send('error');
+				}
+				return res.json(terms);
+			};
+		}); */
 	//route for accepting pending projects
 	apiRouter.route('/reviewproject/:id')
 		.put(function (req, res) {
