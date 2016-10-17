@@ -133,6 +133,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                     'Medical and Population Health Sciences Research'
                 ]
             },
+            // User Story #1175
             {
                 name: 'Honors College',
                 schools: []
