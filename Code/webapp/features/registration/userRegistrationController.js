@@ -118,6 +118,11 @@ angular
                     'Medical and Population Health Sciences Research'
                 ]
             },
+			//User Story 1175
+			{
+				name: 'Honors College',
+				schools: []
+			},
             {
                 name: 'Journalism and Mass Communication',
                 schools: [

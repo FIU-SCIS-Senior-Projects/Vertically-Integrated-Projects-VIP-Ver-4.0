@@ -81,6 +81,11 @@ angular
 							'Medical and Population Health Sciences Research'
 						]
 					},
+										// User Story #1175
+					{
+					name: 'Honors College',
+					schools: []
+					},
 					{
 						name: 'Journalism and Mass Communication',
 						schools: [
@@ -105,7 +110,7 @@ angular
 							'Health Promotion and Disease Prevention'
 						]
 
-					},
+					},            
 					{
 						name: 'Robert Stempel College of Public Health & Social Work',
 						schools: [

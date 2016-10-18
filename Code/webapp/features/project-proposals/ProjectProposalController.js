@@ -133,7 +133,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                     'Medical and Population Health Sciences Research'
                 ]
             },
-            {
+           {
                 name: 'Honors College',
                 schools: []
             },
