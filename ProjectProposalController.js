@@ -62,7 +62,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		});
 		
 		//Joe Use Story
-		vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+		vm.semesters = ['Spring 2017', 'Summer 2017'];
 		
         $scope.colleges= [
             {
@@ -133,8 +133,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                     'Medical and Population Health Sciences Research'
                 ]
             },
-            // User Story #1175
-            {
+           {
                 name: 'Honors College',
                 schools: []
             },
@@ -231,6 +230,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				$scope.SelectedFacultyEmails = "";
 				$scope.SelectedMentorEmails = "";
 				$scope.SelectedStudentEmails = "";
+                //updating semester snaku001
+                $scope.project.semesters = ['Spring 2017', 'Summer 2017'];
 				for(i = 0; i < $scope.project.faculty.length; i++) {
 					if (i != $scope.project.faculty.length - 1) {
 						$scope.SelectedFacultyNames += $scope.project.faculty[i].name + ", ";

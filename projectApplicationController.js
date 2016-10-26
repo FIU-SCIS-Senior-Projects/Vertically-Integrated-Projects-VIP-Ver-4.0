@@ -81,10 +81,10 @@ angular
 							'Medical and Population Health Sciences Research'
 						]
 					},
-					// User Story #1175
+										// User Story #1175
 					{
-						name: 'Honors College',
-						schools: []
+					name: 'Honors College',
+					schools: []
 					},
 					{
 						name: 'Journalism and Mass Communication',
@@ -110,7 +110,7 @@ angular
 							'Health Promotion and Disease Prevention'
 						]
 
-					},
+					},            
 					{
 						name: 'Robert Stempel College of Public Health & Social Work',
 						schools: [
@@ -132,7 +132,7 @@ angular
 				];
 
 				vm.genders = ['Male', 'Female'];
-				vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+				vm.semesters = ['Spring 2017', 'Summer 2017'];
 
 				vm.selectedCollege = vm.Colleges.find(function (element) {
 					return element.name === data.college;
@@ -152,7 +152,7 @@ angular
 				vm.rank = data.rank;
 				vm.school = data.department;
 				vm.college = data.college;
-				vm.semester = null;
+				vm.semester = data.semester;
 				vm.google = data.google;
 				vm.profile = data;
 				
@@ -179,7 +179,7 @@ angular
 					//alert(vm.id);
                     vm.id = $stateParams.id;
                     getProjectById(vm.projects);
-                    } else {
+                } else {
                     vm.sProject = null;
                     //alert($stateParams.id);
                     //alert(vm.id);
@@ -233,7 +233,6 @@ angular
             // processes project application, if the user is not a guest
 			if (!$scope.guest)
             {
-               /*
                 // if the user is a student
                 if (vm.profile.userType == "Student")
                 {
@@ -248,7 +247,7 @@ angular
                      console.log("vm.rank = " + vm.rank + ", vm.profile.rank = " + vm.profile.rank);
                      console.log("vm.pID = " + vm.pID + ", vm.profile.pantherID = " + vm.profile.pantherID);
                      console.log("vm.selectedCollege = " + vm.selectedCollege + ", vm.profile.college = " + vm.profile.college);
-                }*/
+                }
                 
                 // note:
                 // vm = FormData (data provided in submitted form)
@@ -291,15 +290,16 @@ angular
                     console.log("6");
                     vm.profile.skillItem = vm.skillItem;
                 }
-// User Story #1175
-var collegename = vm.selectedCollege.name;
-if(vm.school == "None" || vm.school== undefined){
-if(collegename != "Honors College")
-{
-EnterDepartment();
-return false;
-}
-}
+
+				// User Story #1175
+				var collegename = vm.selectedCollege.name;
+				if(vm.school == "None" || vm.school== undefined){
+					if(collegename != "Honors College")
+					{
+						EnterDepartment();
+						return false;
+					}
+				}
                 console.log("vm.profile.pantherID = " + vm.profile.pantherID + ", vm.pID = " + vm.pID);
                 
                 //f (vm.user_type != 
@@ -406,6 +406,12 @@ return false;
 							}, function(error) {
 								
 							});
+//todo for Pi - snaku001
+var todo1 = {owner: "Pi/CoPi" , todo: profile.firstName + ", has applied for " + project.title + ". Please approve or reject his application", type: "student", link: "/#/reviewuser/" };
+ToDoService.createTodo(todo1).then(function(success)  {
+
+}, function(error) {
+});							
 							
 							var email_msg = 
 							{
@@ -545,17 +551,18 @@ return false;
             }
             );
 		}
-	// User Story #1175
-    function EnterDepartment() {
-    swal({   
-    title: 'Almost There!',
-    text: 'Please Enter School/Department details.',
-    html: true,
-    timer: 10000,
-    showConfirmButton: true
+		// User Story #1175
+		function EnterDepartment() {
+			swal({   
+			title: 'Almost There!',
+			text: 'Please Enter School/Department details.',
+			html: true,
+			timer: 10000,
+			showConfirmButton: true
+			}
+		);
     }
-    );
-    }
+		
 		function msg(title, text) {
 			swal({   
                 title: title,   

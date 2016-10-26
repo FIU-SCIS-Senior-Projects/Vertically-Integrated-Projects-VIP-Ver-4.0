@@ -98,8 +98,8 @@
 				$scope.result = "Approved";
                 
                 console.log("send mail for project " + user.project + " to " + user.email);
-                
-				var todo = {owner: "Student", owner_id: user._id, todo: "Dear student, the project titled: " + user.project + " has accepted your application." , type: "project", link: "/#/to-do" };
+                //Changed the message in the todo snaku001
+				var todo = {owner: "Student", owner_id: user._id, todo: "Dear student, your application for the project titled: " + user.project + " has been accepted." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -152,7 +152,7 @@
 				User.nodeEmail(email_msg);
 
 			});
-			// User Story #1144
+			//User Story #1144
 			var log = {projectid: user.projectid, student: user._id, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: name, gender: user.gender, department: user.department, college: user.college, action: "Rejected", type: "student", skillItem: user.skillItem };
 			reviewPPS.createLog(log).then(function(success)  {
 					
