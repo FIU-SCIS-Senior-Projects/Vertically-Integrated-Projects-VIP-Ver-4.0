@@ -30,6 +30,10 @@ module.exports = function(app, express) {
                 profile.department = req.body.department;
 				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
+                profile.vipcredit  = req.body.vipcredit;
+                profile.volunteer  = req.body.volunteer;
+                profile.independentstudy = req.body.independentstudy;
+
                 
                 console.log("new gender: " + profile.gender);
                 console.log("new college: " + profile.college);
@@ -73,6 +77,9 @@ module.exports = function(app, express) {
                 profile.joined_project = req.body.joined_project;
 				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
+                profile.vipcredit  = req.body.vipcredit;
+                profile.volunteer  = req.body.volunteer;
+                profile.independentstudy = req.body.independentstudy;
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
                 
@@ -223,13 +230,12 @@ module.exports = function(app, express) {
 				profile.rank = req.body.rank;
 				profile.image = req.body.image;
 				profile.resume = req.body.resume;
-                if (req.body.piDenial)
-                {
-                    profile.piDenial = req.body.piDenial;
-                }
                 
 				// User Story #1144
                 profile.skillItem = req.body.skillItem;
+                profile.vipcredit  = req.body.vipcredit;
+                profile.volunteer  = req.body.volunteer;
+                profile.independentstudy = req.body.independentstudy;
                 // this field will be set to true if the acceptProfile() function called us
                 if (req.body.piApproval)
                 {
@@ -396,7 +402,7 @@ module.exports = function(app, express) {
 						}
 					);
                 }
-                // User Story #1140
+// User Story #1140
                 if (req.body.__v == 4)
                 {
                 	profile.piDenial = false;
@@ -422,6 +428,7 @@ module.exports = function(app, express) {
 					);
                 }
 
+				
 				// update profile, "Rank" and "userType" changes will be handled below this, it's impossible to update those values here
 				// request values will be populated in the DB here
 				profile.save(function(err){
@@ -445,7 +452,7 @@ module.exports = function(app, express) {
 					vm.objectId = profile.objectId;
 
 					// recipient email(s)
-					vm.userData.recipient = "vlalo001@fiu.edu,mmart196@fiu.edu,jjens011@fiu.edu,mtahe006@fiu.edu,sadjadi@cs.fiu.edu";
+					vm.userData.recipient = "vlalo001@fiu.edu,jgonz770@fiu.edu,mtahe006@fiu.edu,sadjadi@cs.fiu.edu";
 
 					// email body text
 					vm.userData.text = "Dear Pi/CoPi, \n\n" + profile.firstName + " " + profile.lastName + " is attempting to update their userType FROM "
@@ -553,7 +560,8 @@ module.exports = function(app, express) {
                 return res.json(profile);
             });
         });
-// User Story #1140
+
+	// User Story #1140
     apiRouter.route('/reviewuser/:user_id')
         .get(function (req, res) {
             Profile.findById(req.params.user_id, function(err, profile) {
@@ -565,7 +573,7 @@ module.exports = function(app, express) {
                     res.json(profile);
                 }
             });
-        });
+        });	
 		
 	//route for adding a member to a project(after approval)
 		apiRouter.route('/reviewusers/:userid/:pid')

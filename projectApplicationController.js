@@ -131,6 +131,9 @@ angular
 					}
 				];
 
+					
+					
+
 				vm.genders = ['Male', 'Female'];
 				vm.semesters = ['Spring 2017', 'Summer 2017'];
 
@@ -155,6 +158,7 @@ angular
 				vm.semester = data.semester;
 				vm.google = data.google;
 				vm.profile = data;
+				vm.branch = null;
 				
 			}
 			else {
@@ -291,6 +295,12 @@ angular
                     vm.profile.skillItem = vm.skillItem;
                 }
 
+
+                vm.profile.vipcredit = vm.vipcredit;
+                vm.profile.independentstudy = vm.independentstudy;
+                if(vm.branch =='2'){
+                	vm.profile.volunteer ="true";
+                }
 				// User Story #1175
 				var collegename = vm.selectedCollege.name;
 				if(vm.school == "None" || vm.school== undefined){
@@ -406,12 +416,6 @@ angular
 							}, function(error) {
 								
 							});
-//todo for Pi - snaku001
-var todo1 = {owner: "Pi/CoPi" , todo: profile.firstName + ", has applied for " + project.title + ". Please approve or reject his application", type: "student", link: "/#/reviewuser/" };
-ToDoService.createTodo(todo1).then(function(success)  {
-
-}, function(error) {
-});							
 							
 							var email_msg = 
 							{
@@ -539,7 +543,15 @@ ToDoService.createTodo(todo1).then(function(success)  {
             }
             );
 		}
-        
+
+$scope.optionselected = function () {
+
+    if($scope.projApp.branch=='2'){
+    	vm.profile.volunteer = "true";
+    }
+}       
+
+
         // student is missing some of the required fields
 		function studentMissingFields() {
 			swal({   
