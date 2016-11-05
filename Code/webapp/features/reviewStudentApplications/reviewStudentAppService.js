@@ -10,26 +10,34 @@ function userService($http) {
                return data.data;
             });
         };
-		
+
 		profileFactory.loadProjects = function () {
             return $http.get('/api/projects/').then(function(data){
+				console.log(data.data);
                return data.data;
             });
         };
-		
+		profileFactory.loadTerms = function() {
+			return $http.get('/api/terms/').then(function(data){
+				return data.data;
+			});
+		};
 		//Gets the individual member
 		profileFactory.loadUser = function (id) {
 			return $http.get('/api/profilestudent/' + id).then(function(data){
                return data.data;
             });
-		}
-		
+		};
+	     profileFactory.addterm = function(termdata){
+         return $http.post('/api/terms', termdata);
+			return data.data;
+		};
 		profileFactory.setJoinedProjectFalse = function (id) {
 			 return $http.put('/api/profilejoinedproject/'+ id).then(function (data){
 				 return data.data;
 			});
         };
-		
+
 		profileFactory.RemoveFromProject = function (id, members, detailed) {
 			 return $http.put('/api/project/'+ id + '/' + members + '/' + detailed).then(function (data){
 				 return data.data;

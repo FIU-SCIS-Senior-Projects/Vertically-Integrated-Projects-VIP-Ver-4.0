@@ -39,10 +39,11 @@
         <br><br>
 		<center ng-hide="vm.done"><img ng-hide="vm.done" width="30%" height="30%" src="img/loading.gif"/></center>
         
-        <div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.filteredprojects | filter: { status: 'Active' }" ng-click="vm.viewDetails(project)">
+        <div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.filteredprojects" ng-click="vm.viewDetails(project)">
 
             <div class="proj-info-box">
                 <img ng-src="{{project.image}}" alt="{{project.title}}" class="proj-image">
+				<h3 class="proj-title-teams">{{project.semester}}</h3>
                 <h3 class="proj-title-teams">{{project.title}}</h3>
                 <h5 class="proj-title-owner">Owner: {{project.owner_name}}</h5>
                  <!-- User Story #1142-->

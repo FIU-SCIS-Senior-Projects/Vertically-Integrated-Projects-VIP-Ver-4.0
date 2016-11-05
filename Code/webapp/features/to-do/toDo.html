@@ -57,7 +57,8 @@
         <div class="panel-heading">
             <h4><b>User Account Registration Review</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="user in todo.list | filter:emptyOrNull |  filter: user.type='user' | filter: user.read='false' | orderBy: -todo.time:true | date:'medium'">
+         <!-- Adding filter type!=student and type!=project snaku001 -->
+        <ul class="list-group" ng-repeat="user in todo.list | filter:emptyOrNull |  filter:user.type='user'| filter:{type: '!student'} | filter:{type: '!project'} | filter:user.read='false' | orderBy: -todo.time:true | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-click="todo.markedAsRead(user)"><span class="glyphicon glyphicon-trash"></span></a>

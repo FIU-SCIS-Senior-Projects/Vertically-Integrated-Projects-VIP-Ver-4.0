@@ -36,7 +36,7 @@ function uploadImage2() {
 
 
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
-    .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams, $rootScope){
+    .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService,reviewStudentAppService, ToDoService, $stateParams, $rootScope){
         
 		
 		var profile;
@@ -63,7 +63,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
 		//Joe Use Story
 		vm.semesters = ['Spring 2017', 'Summer 2017'];
-		
+		6
         $scope.colleges= [
             {
                 name: 'Architecture & The Arts',
@@ -194,6 +194,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         
         vm.title = "";
         vm.image = "";
+		vm.terms;
         vm.description = null;
         vm.disciplines = [];
         vm.editingMode = false;
@@ -215,7 +216,9 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 vm.id = $stateParams.id;
                 vm.editingMode = true;
                 getProjectById();
+				
             }
+			loadTerms();
         }
 
 		var old_project = null;
@@ -230,6 +233,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				$scope.SelectedFacultyEmails = "";
 				$scope.SelectedMentorEmails = "";
 				$scope.SelectedStudentEmails = "";
+				 //updating semester snaku001
+                $scope.project.semesters = ['Spring 2017', 'Summer 2017'];
 				for(i = 0; i < $scope.project.faculty.length; i++) {
 					if (i != $scope.project.faculty.length - 1) {
 						$scope.SelectedFacultyNames += $scope.project.faculty[i].name + ", ";
@@ -271,9 +276,44 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             }
             return 0;
             }
-
+		//Joe's User Story
+		function loadTerms(){
+			reviewStudentAppService.loadTerms().then(function(data){
+				vm.terms = data;
+				console.log(vm.terms);
+			});
+		}
 
         $scope.save = function save() {
+		//Joe's Use Story
+		var SelectedTerm = $scope.project.semester;
+		var SelectedStatus;
+		//console.log(SelectedTerm);
+		for(i = 0; i < vm.terms.length; i++) {
+			if (SelectedTerm ==  vm.terms[i].name){
+				//console.log(SelectedTerm);
+				//console.log(vm.terms[i].name);
+				console.log(vm.terms[i].status);
+				SelectedStatus = vm.terms[i].status;
+			}
+			
+		}
+		console.log(SelectedStatus);
+		if ( SelectedStatus == "Disabled")  {
+				
+				swal({
+                            title: "Dear Proposer!",   
+                            text: "This Semester is no longer active, please propose your project for an active semester",   
+                            type: "info",   
+                            confirmButtonText: "Okay" ,
+                            showCancelButton: true,
+                }, function () {
+                            //alert(1);
+                            $window.location.href = "/#/vip-project-proposal";
+                });
+				return;
+			} else {
+		
 		//Use Story #849
 			// loading();
 
@@ -368,6 +408,7 @@ return;
 						});
 			}
 			else {	
+					vm.semesters = ['Spring 2017', 'Summer 2017'];
 					if (old_project) {
 						$scope.project.old_project = old_project;
 					}
@@ -418,7 +459,7 @@ return;
 						});
 			}
 			
-			
+			}
         };
 
         $scope.toggleCheckbox = function toggleSelection(majors) {

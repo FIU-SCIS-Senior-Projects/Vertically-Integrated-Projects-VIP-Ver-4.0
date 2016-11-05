@@ -19,6 +19,7 @@
         vm.own = [];
         
         vm.profile;
+		vm.projects;
         vm.applyForProject = applyForProject;
         vm.deleteProject = deleteProject;
         vm.editProject = editProject;
@@ -65,6 +66,11 @@
             }
 			ProfileService.loadProfile().then(function(data){
 				vm.profile = data;
+			
+			reviewStudentAppService.loadProjects().then(function(data){
+				vm.projects = data;	
+			});
+		
 			});
         //}           
             
@@ -127,7 +133,19 @@
                             $window.location.href = "/#/login";
                 });
             }
-            
+                        else if (vm.data.status == 'Disabled') {
+				
+				swal({
+                            title: "Dear Student!",   
+                            text: "This Project is no longer active, please apply to an active project",   
+                            type: "info",   
+                            confirmButtonText: "Okay" ,
+                            showCancelButton: true,
+                }, function () {
+                            //alert(1);
+                            $window.location.href = "/#/vip-projects";
+                });
+			}
             // all other users are allowed
             else
             {

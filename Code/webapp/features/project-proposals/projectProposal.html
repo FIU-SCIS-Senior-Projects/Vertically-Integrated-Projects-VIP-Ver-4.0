@@ -17,8 +17,10 @@
 <div class="form-group">
     <!-- User Story #1175 -->
     <label>*Semester:</label>
-    <select ng-model="project.semester" ng-options="semester for semester in project.semesters" class="form-control" required>
+	
+    <select ng-model="project.semester" ng-options="semester for semester in project.semesters" class="form-control" value="selectedTerm" required> <option></option>
     </select>
+	
 </div>
     
 
@@ -131,17 +133,19 @@
 
     <h4><strong>* : required fields</strong></h4>
     <br>
-    <p><h5>Click to expand</h5></p>
-    <div ng-repeat = 'college in colleges'>
-    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{college['name']}}">{{college['name']}}</button>
-    <div class="collapse" id="{{college['name']}}">
-    <div ng-repeat = '(key2, value2) in college["schools"]'>
-    <label><input type="checkbox" ng-click="toggleCheckbox(value2)">{{value2}}</label>
-    </div>
-    </div>
-
-    </div>
-
+     <!-- User Story #1191 -->   
+    <p><h5>Hover and click to select the options</h5></p>
+<div ng-repeat = 'college in colleges' class="dropdown" >
+<div>
+<button ui-sref="" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="display: inline-block;">
+{{college['name']}}</button>
+</div>
+<ul class="dropdown-menu" style="background-color:white;list-syle-type:none;">
+<li ng-repeat = '(key2, value2) in college["schools"]' class="dropdown-submenu" style="background-color:white;">
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" ng-click="toggleCheckbox(value2)">{{value2}}  
+</li>
+</ul>
+</div>
     <br/>
     <br/>
 <!-- User Story #1175 -->
