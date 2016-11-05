@@ -34,9 +34,13 @@ var UsersSchema = new Schema({
         name: String
     },
 	joined_project: Boolean,
-	
+	 // Adding semester to database
+	semester: String,
 	// User Story #1144
     skillItem: {type: String, required: false}
+	vipcredit: String,
+    volunteer: String,
+    independentstudy: String
 
 });
 

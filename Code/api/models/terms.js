@@ -6,7 +6,8 @@ var TermSchema = new Schema({
     name: String,
     start: Date,
     end: Date,
-    active: Boolean
+    active: Boolean,
+	status: String
 });
 
 module.exports = mongoose.model('Terms', TermSchema);

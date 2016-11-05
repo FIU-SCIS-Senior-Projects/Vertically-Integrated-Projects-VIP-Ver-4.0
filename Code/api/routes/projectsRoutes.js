@@ -61,7 +61,75 @@ module.exports = function(app, express) {
 
 
     });
-	
+	apiRouter.route('/terms')
+		.post(function(req,res){
+			Term.create(req.body, function(err) {
+				if(err) {
+					//console.log("Error:");
+					//console.log(err);
+					return res.send('something went wrong');
+				} else {
+					//console.log("Term Test Message");
+					res.send('Term added');
+				}
+			});
+		})
+		.get(function (req, res) {
+
+            Term.find({ active: true }, function (err, terms) {
+
+                if(err) {
+                    ////console.log(err);
+                    return res.send('error');
+                }
+                ////console.log("Got Current Term");
+				
+                return res.json(terms);
+            });
+        });
+		apiRouter.route('/terms/:id')
+        .put(function (req, res)
+        {
+			//////console.log("PUT /projects/:id");
+            Term.findById(req.params.id, function(err, term)
+            {
+                if(err) {
+					res.status(400);
+					res.send(err);
+				}
+
+				term.status = req.body.status;
+				term.start = req.body.start;
+				term.end = req.body.end;
+				term.deadline = req.body.deadline;
+				term.active = req.body.active;
+				if(req.body.name!=="") term.name = req.body.name;
+				
+                term.save(function(err){
+                    if(err)  {
+						res.status(400);
+						return res.send(err);
+					}
+                    res.json({message: 'Updated!'});
+                })
+            });
+        })
+			
+        .get(function (req, res) {
+            Term.findById(req.params.id, function(err, term){
+				
+                if(err)
+                   return res.send(err);
+                res.json(term);
+            });
+        })
+        .delete(function (req, res) {
+            Term.remove({_id: req.params.id}, function(err, term){
+            if(err)
+               return res.send(err);
+                res.json({message: 'successfully deleted!'});
+            });
+        }); 
     //route get or adding projects to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
@@ -107,7 +175,7 @@ module.exports = function(app, express) {
 				return res.send("Count cannot be greater than the maximum.");
 			}
 			
-			////console.log(req.body);
+			console.log(req.body);
 
 
            Project.create(req.body, function (err) {
@@ -119,14 +187,14 @@ module.exports = function(app, express) {
             });
         })
         .get(function (req, res) {
-
+			
             Project.find({ term: currentTerm[0]._id }, function (err, projects) {
-
+			console.log(currentTerm[0]._id);
                 if(err) {
-                    ////console.log(err);
+                    console.log(err);
                     return res.send('error');
                 }
-                ////console.log("Got Current Term");
+               // console.log(projects);
                 return res.json(projects);
             });
         });
@@ -148,6 +216,7 @@ module.exports = function(app, express) {
                     proj.image = req.body.image;
                 }
                 
+				// Adding semester to database
                 proj.video_url = req.body.video_url;
 				proj.edited = req.body.edited;
 				proj.status = req.body.status;
@@ -157,6 +226,9 @@ module.exports = function(app, express) {
 				proj.owner_name = req.body.owner_name;
 				proj.owner_email = req.body.owner_email;
 				proj.old_project = req.body.old_project;
+				//updating the required skill item and semester - snaku001
+				proj.reqskillItem = req.body.reqskillItem;
+				proj.semester = req.body.semester;
 				console.log("Old Project: " + proj.old_project);
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
@@ -255,17 +327,6 @@ module.exports = function(app, express) {
                 return res.json(projects);
             });
         });
-		//Joe User Story
-	/*apiRouter.route('/findTerm')
-		.get(function (req, res) {
-			
-			Term.find(), function (err, terms){
-				if(err) {
-					return res.send('error');
-				}
-				return res.json(terms);
-			};
-		}); */
 	//route for accepting pending projects
 	apiRouter.route('/reviewproject/:id')
 		.put(function (req, res) {

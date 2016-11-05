@@ -30,7 +30,13 @@ module.exports = function(app, express) {
                 profile.department = req.body.department;
 				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
+				profile.vipcredit  = req.body.vipcredit;
+                profile.volunteer  = req.body.volunteer;
+                profile.independentstudy = req.body.independentstudy;
+
                 
+                // Adding semester to database
+                profile.semester = req.body.semester;
                 console.log("new gender: " + profile.gender);
                 console.log("new college: " + profile.college);
                 console.log("new department: " + profile.department);
@@ -73,6 +79,12 @@ module.exports = function(app, express) {
                 profile.joined_project = req.body.joined_project;
 				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
+				profile.vipcredit  = req.body.vipcredit;
+                profile.volunteer  = req.body.volunteer;
+                profile.independentstudy = req.body.independentstudy;
+				////console.log("rank = " + req.body.rank);
+				////console.log("userType = " + req.body.userType);
+                
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
                 
@@ -226,6 +238,9 @@ module.exports = function(app, express) {
                 
 				// User Story #1144
                 profile.skillItem = req.body.skillItem;
+				profile.vipcredit  = req.body.vipcredit;
+                profile.volunteer  = req.body.volunteer;
+                profile.independentstudy = req.body.independentstudy;
                 // this field will be set to true if the acceptProfile() function called us
                 if (req.body.piApproval)
                 {
