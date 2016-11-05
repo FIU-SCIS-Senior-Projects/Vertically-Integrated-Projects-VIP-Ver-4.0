@@ -155,6 +155,7 @@ angular
 				vm.semester = data.semester;
 				vm.google = data.google;
 				vm.profile = data;
+				vm.branch = null;
 				
 			}
 			else {
@@ -166,6 +167,8 @@ angular
 			}
 		});
 
+		
+		
         init();
         function init () {
             loadData();
@@ -219,14 +222,30 @@ angular
             if (!validateStudentFormData(vm))
             {
                 return 0;
-            }
+            } 
             
             return 1;
         }
 
+		
         // note: vm.xxx = data from form, vm.profile.xxx = data from current users account
         vm.save = function()
         {
+			
+			if (vm.sProject.status == 'Inactive') {
+				console.log(vm.sProject.status);
+				swal({
+                            title: "Dear Student!",   
+                            text: "This Project is no longer active, please apply to an active project",   
+                            type: "info",   
+                            confirmButtonText: "Okay" ,
+                            showCancelButton: true,
+                }, function () {
+                            //alert(1);
+                            $window.location.href = "/#/vip-projects";
+                });
+				return;
+			} else {
             // in the event of high volume traffic, this function may take longer to complete for each user
 			loading();
 			
@@ -291,6 +310,13 @@ angular
                     vm.profile.skillItem = vm.skillItem;
                 }
 
+				vm.profile.vipcredit = vm.vipcredit;
+                vm.profile.independentstudy = vm.independentstudy;
+                if(vm.branch =='2'){
+                	vm.profile.volunteer ="true";
+                }
+				// Adding semester to database
+                vm.profile.semester = vm.semester;
 				// User Story #1175
 				var collegename = vm.selectedCollege.name;
 				if(vm.school == "None" || vm.school== undefined){
@@ -406,6 +432,12 @@ angular
 							}, function(error) {
 								
 							});
+							//todo for Pi - snaku001
+							var todo1 = {owner: "Pi/CoPi" , todo: profile.firstName + ", has applied for " + project.title + ". Please approve or reject his application", type: "student", link: "/#/reviewuser" };
+							ToDoService.createTodo(todo1).then(function(success)  {
+
+}, function(error) {
+});
 							
 							var email_msg = 
 							{
@@ -520,7 +552,7 @@ angular
 				
 				
 			}
-			
+			}
         };
 		
 		function loading() {
@@ -534,6 +566,14 @@ angular
             );
 		}
         
+	$scope.optionselected = function () {
+
+    if($scope.projApp.branch=='2'){
+    	vm.profile.volunteer = "true";
+		}
+	}       
+
+		
         // student is missing some of the required fields
 		function studentMissingFields() {
 			swal({   

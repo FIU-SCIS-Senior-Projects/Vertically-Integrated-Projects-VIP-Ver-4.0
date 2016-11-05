@@ -11,7 +11,7 @@
 <td colspan="4">
 <!-- User Story #1175 -->
 <label>*Project:</label>
-<select ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects" class="form-control" required>
+<select ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects | filter: project.status = 'Active'" class="form-control"required>
 </select>
 </td>
 </tr>
@@ -79,6 +79,37 @@
 <select ng-model="projApp.gender" ng-options="gender for gender in projApp.genders" class="form-control" required></select>
 </div>
 </td>
+
+<tr ng-if="projApp.type == 'Student'">
+<td colspan="4">
+<label>*Please select one of the options:</label>
+<select ng-change="optionselected()" ng-model="projApp.branch" class="form-control"  required><option></option>
+<option value="1">VIP Credit </option>
+<option value="2">Volunteer </option>
+<option value="3">Independent Study </option>
+</select>
+</td>
+</tr>
+
+<tr ng-if="projApp.branch == '1'">
+<td colspan="4">
+<select class="form-control" ng-model="projApp.vipcredit" required>
+<option></option>
+<option value="IDS 2947">1 Credit [IDS 2947] </option>
+<option value="IDS 3948">2 Credit [IDS 3948] </option>
+<option value="IDS 4993">3 Credit [IDS 4993] </option>
+</select>
+</td>
+</tr>
+
+<tr ng-if="projApp.branch == '3'">
+<td colspan="4">
+<label>Name of the Instructor*</label>
+<input type="text" class="form-control" ng-model="projApp.independentstudy" required/>
+</td>
+</tr>
+
+
 
 <tr ng-hide="guest">
 <td colspan="4">

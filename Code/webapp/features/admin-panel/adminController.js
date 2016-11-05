@@ -31,6 +31,7 @@
 		vm.unconfirmedusers;//Unconfirmed users (Email is not verified)
 		vm.filteredusers; //filteredusers affected by filter function
 		vm.projects;
+		vm.terms;
 		vm.filterUsers = filterUsers;
 		vm.currentuserview;
 		vm.currentview = currentview;
@@ -38,7 +39,10 @@
 		vm.changeUserType = changeUserType;
 		vm.ConfirmUser = ConfirmUser;
 		vm.RejectUser = RejectUser;
-		
+		vm.seed = seed;
+		//userstory #1172
+		vm.exportData = exportData;
+
 		
 		//Out of scope functions
 		vm.userTypeChange = userTypeChange;
@@ -51,18 +55,22 @@
 		vm.usertypeinusertype;
 		vm.projectinprojects;
 		vm.userinunconfirmed;
+		vm.AddTerms = AddTerms;
 		
 		vm.currentUser = function(user) { vm.cuser = user; }
 		vm.currentProject = function(project) {  vm.cproject = project; }
+		vm.currentTerm = function(term) { vm.cterm = term; }
 		vm.sw = ChangeUserProject;
 		vm.sc = ClearProject;
 		
 		//Joe's User Story
 		vm.se = ChangeProjectStatus;
+		vm.nw = ChangeTermStatus;
 		
         vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student', 'Undefined'];
 		//Joe's User Story
-		vm.status = ['Active','Inactive'];
+		vm.status = ['Active','Disabled'];
+		vm.active = ['Active','Disabled'];
 		vm.getProjectTitle = function (email) {
 			if (email) {
 				if (vm.projects) {
@@ -138,13 +146,26 @@
 			});
 			}
 		}
-		
+		//Ravi's Help
+		function AddTerms(){
+		var termsdata = {name: "Fall 2016",
+		start: new Date('2016', '08'),
+		end: new Date('2017', '12'),
+		deadline: new Date('2017, 08'),
+		active: true ,
+		status: "Active"};
+
+reviewStudentAppService.addterm(termsdata).then(function(success){ },function(error){});
+
+};
 		
         init();
 		
         function init(){
             loadUsers();
 			loadProjects();
+			//Joe's User Story
+			loadTerms();
         }
 		
 		//Load all user information
@@ -175,7 +196,13 @@
 				vm.projects = data;	
 			});
 		}
-		
+		//Joe's User Story
+		function loadTerms(){
+			reviewStudentAppService.loadTerms().then(function(data){
+				vm.terms = data;
+				console.log(data);
+			});
+		}
 		
 		//Filters users based on parameters
 		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank, SelectedProject, userproject)
@@ -411,7 +438,10 @@
 			});
 			}
 		}
-		
+		function seed(){
+			
+			ProjectService.createTerm();
+		}
 		
 		//Out of scope functions for Change User Type function
 		function userTypeChange(usertype){vm.usertypeinusertype = usertype;}
@@ -435,7 +465,42 @@
 			});
 			}
 		}
+		//userstory #1172
+function exportData() {
+adminService.loadAllUsers().then(function(data){
+	  //console.log($scope.selectedusertype.name);
+		if($scope.selectedusertype.name){
+				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"'" , [data]);
+		}
+		//rank
+		if($scope.selecteduserrank.name){
+				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE rank='"+$scope.selecteduserrank.name+"'" , [data]);
+		}
+		//project goes here
+		if($scope.selectedproject.name){
+				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE joined_project='"+$scope.selectedproject.name+"'" , [data]);
+		}
+		//usertype and rank
+		if($scope.selectedusertype.name && $scope.selecteduserrank.name){
+				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selecteduserrank.name+"'" , [data]);
+        }
+        //usertype and project
+        if($scope.selectedusertype.name && $scope.selectedproject.name){
+				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedproject.name+"'" , [data]);
+        }
+        //project and rank
+        if($scope.selectedusertype.name && $scope.selecteduserrank.name){
+				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selecteduserrank.name+"' AND rank='"+$scope.selectedproject.name+"'" , [data]);
+        }
+        //usertype and project and rank
+        if($scope.selectedusertype.name && $scope.selecteduserrank.name){
+				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedrank.name+"' AND rank='"+$scope.selectedproject+"'" , [data]);
+        }
 		
+		}
+		);
+		};
+
 		function confirm_msg()
         {
             swal({   
@@ -573,29 +638,59 @@
 				changepro_msg();
 			}
 		};
-		//Joe's User Story Not yet working
-		function ChangeProjectStatus(projectInfo)
+		//Joe's User Story 
+		function ChangeProjectStatus()
 		{
 			//Get the project info based on the title being passed
 			//Change status
 			//Update DB
-			console.log(projectInfo);
 			var project = vm.cproject;
-			var LockStatus = vm.status;
-			
-			if(project && LockStatus){
-			var selectedProject;
-			for(i = 0; i < vm.projects.length; i++) {
-					if (vm.projects[i].title.includes(selectedProject)) {
-						selectedProject = vm.projects[i];
-					}
+
+			//console.log(project.title);
+			if(project){
+				var selectedStatus = $scope.selectedStatus;
+				//console.log(selectedStatus);
+				if( selectedStatus == vm.status[0]) {
+				selectedStatus = 'Active';
+				//console.log(selectedStatus);
+				} else {
+					selectedStatus = 'Disabled';
+					//console.log(selectedStatus);
 				}
-			project.status = "Inactive";
-			ProjectService.editProject(selectedProject, (selectedProject.status = LockStatus));
+				project.status = selectedStatus;
+				ProjectService.editProject(project, project._id);
+				//console.log("In the Projects!");
 			}
 			changestat_msg();
-			
 		};
+		//Joe's User Story
+		function ChangeTermStatus()
+		{
+			var term = vm.cterm;
+
+			var selectedTerm = $scope.selectedTerm.name;
+			console.log(selectedTerm);
+			//console.log(term.name);
+			if(term){
+				var selectedTermStatus = $scope.selectedTermStatus;
+				if (selectedTermStatus == vm.active[0]){
+					console.log(selectedTermStatus);
+					selectedTermStatus = 'Active';
+				} else {
+					selectedTermStatus = 'Disabled';
+				}
+				for(i = 0; i < vm.projects.length; i++){
+					//console.log(vm.projects[i].title);
+					if(vm.projects[i].semester == selectedTerm) {
+						vm.projects[i].status = selectedTermStatus;
+						ProjectService.editProject(vm.projects[i], vm.projects[i]._id);
+					}
+				}
+				term.status = selectedTermStatus;
+				ProjectService.editTerm(term, term._id);
+				}
+				changestat_msg();
+			}
 		
 		//Remove a user from a project
 		function ClearProject()
