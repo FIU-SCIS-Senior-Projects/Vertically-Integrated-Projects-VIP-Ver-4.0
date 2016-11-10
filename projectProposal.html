@@ -102,6 +102,11 @@
     <input type="text" ng-model="project.mingle_url" class="form-control" />
     </div>
 
+	<div class="form-group">
+    <label>Link to Previous Semester's Project</label>
+    <input type="text" ng-model="project.archive_url" class="form-control" />
+    </div>
+	
     <div class="form-group">
     <label>Minimum number of students:</label>
     <input type="number" min="0" class="form-control" placeholder="" ng-model="project.firstSemester"/>
@@ -114,7 +119,7 @@
     <!-- User Story #1144 -->
     <div class="form-group">
     <!-- User Story #1175 -->
-    <label>*Skill Item:</label>
+    <label>*Required Skills and Knowledge:</label>
     <input type="text" class="form-control" placeholder="" ng-model="project.reqskillItem" required/>
     </div>
 

@@ -130,6 +130,16 @@ angular
 						]
 					}
 				];
+		vm.ranks = [
+			{ "name" : "Freshman", "rank" : "Freshman" },
+			{ "name" : "Sophmore", "rank" : "Sophmore" },
+			{ "name" : "Junior", "rank" : "Junior" },
+			{ "name" : "Senior", "rank" : "Senior" },
+			{ "name" : "Masters", "rank" : "Masters" },
+			{ "name" : "PhD", "rank" : "PhD" },
+			{ "name" : "postDoc", "rank" : "Student" },
+		
+		];
 
 					
 					
@@ -139,7 +149,10 @@ angular
 
 				vm.selectedCollege = vm.Colleges.find(function (element) {
 					return element.name === data.college;
-				});;
+				});
+					vm.selectedRank = vm.ranks.find(function(element){
+					return element.name === data.rank;
+				});
 						
 				$scope.done = true;
 				profile = data;
@@ -259,12 +272,11 @@ angular
                 // if the user provided us with new information that wasnt previously in the database for their account, add that info to the db
                 //updateUserData(vm, vm.profile);
                 
-                if (vm.profile.rank != vm.rank)
+               if (vm.profile.rank != vm.selectedRank)
                 {
                     console.log("1");
-                    vm.profile.rank = vm.rank;
+                    vm.profile.rank = vm.selectedRank.name;
                 }
-
                 if (vm.profile.pantherID != vm.pID)
                 {
                     console.log("2");
@@ -295,7 +307,7 @@ angular
                     vm.profile.skillItem = vm.skillItem;
                 }
 
-
+                vm.profile.rank = vm.rank;
                 vm.profile.vipcredit = vm.vipcredit;
                 vm.profile.independentstudy = vm.independentstudy;
                 if(vm.branch =='2'){
