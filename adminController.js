@@ -31,7 +31,7 @@
 		vm.unconfirmedusers;//Unconfirmed users (Email is not verified)
 		vm.filteredusers; //filteredusers affected by filter function
 		vm.projects;
-		
+		vm.terms;
 		vm.filterUsers = filterUsers;
 		vm.currentuserview;
 		vm.currentview = currentview;
@@ -39,6 +39,7 @@
 		vm.changeUserType = changeUserType;
 		vm.ConfirmUser = ConfirmUser;
 		vm.RejectUser = RejectUser;
+		vm.seed = seed;
 		//userstory #1172
 		vm.exportData = exportData;
 
@@ -54,14 +55,22 @@
 		vm.usertypeinusertype;
 		vm.projectinprojects;
 		vm.userinunconfirmed;
+		vm.AddTerms = AddTerms;
 		
 		vm.currentUser = function(user) { vm.cuser = user; }
 		vm.currentProject = function(project) {  vm.cproject = project; }
+		vm.currentTerm = function(term) { vm.cterm = term; }
 		vm.sw = ChangeUserProject;
 		vm.sc = ClearProject;
 		
-        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student', 'Undefined'];
+		//Joe's User Story
+		vm.se = ChangeProjectStatus;
+		vm.nw = ChangeTermStatus;
 		
+        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student', 'Undefined'];
+		//Joe's User Story
+		vm.status = ['Active','Disabled'];
+		vm.active = ['Active','Disabled'];
 		vm.getProjectTitle = function (email) {
 			if (email) {
 				if (vm.projects) {
@@ -137,13 +146,26 @@
 			});
 			}
 		}
-		
+		//Ravi's Help
+		function AddTerms(){
+		var termsdata = {name: "Fall 2016",
+		start: new Date('2016', '08'),
+		end: new Date('2017', '12'),
+		deadline: new Date('2017, 08'),
+		active: true ,
+		status: "Active"};
+
+reviewStudentAppService.addterm(termsdata).then(function(success){ },function(error){});
+
+};
 		
         init();
 		
         function init(){
             loadUsers();
 			loadProjects();
+			//Joe's User Story
+			loadTerms();
         }
 		
 		//Load all user information
@@ -174,7 +196,13 @@
 				vm.projects = data;	
 			});
 		}
-		
+		//Joe's User Story
+		function loadTerms(){
+			reviewStudentAppService.loadTerms().then(function(data){
+				vm.terms = data;
+				console.log(data);
+			});
+		}
 		
 		//Filters users based on parameters
 		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank, SelectedProject, userproject)
@@ -208,7 +236,6 @@
 			if (usertype && selectedusertype)
 			{
 				usertype = selectedusertype.name;
-		
 				var tempArray = [];
 				vm.filteredusers.forEach(function (obj)
 				{
@@ -411,7 +438,10 @@
 			});
 			}
 		}
-		
+		function seed(){
+			
+			ProjectService.createTerm();
+		}
 		
 		//Out of scope functions for Change User Type function
 		function userTypeChange(usertype){vm.usertypeinusertype = usertype;}
@@ -434,46 +464,66 @@
 			});
 			});
 			}
-		};
-//userstory #1172
+		}
+	//Updated code	//userstory #1172
 function exportData() {
 adminService.loadAllUsers().then(function(data){
 	  //console.log($scope.selectedusertype.name);
-		if($scope.selectedusertype.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"'" , [data]);
-		}
-		//rank
-		if($scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE rank='"+$scope.selecteduserrank.name+"'" , [data]);
-		}
-		//project goes here
-		if($scope.selectedproject.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE joined_project='"+$scope.selectedproject.name+"'" , [data]);
-		}
-		//usertype and rank
-		if($scope.selectedusertype.name && $scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selecteduserrank.name+"'" , [data]);
+	  	var ut = ((typeof $scope.usertype=="undefined")==false);
+	  	var ur = ((typeof $scope.userrank=="undefined")==false);
+	    var up = ((typeof $scope.userproject=="undefined")==false);
+	    var uts = ((typeof $scope.selectedusertype=="undefined")==false);
+	    var urs = ((typeof $scope.selecteduserrank=="undefined")==false);
+	    var ups = ((typeof $scope.selectedproject=="undefined")==false);
+	    console.log(ut);
+	    console.log(ur);
+	    console.log(up);
+	    console.log(uts);
+	    console.log(urs);
+	    var date = new Date();
+	    var todays = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear()+"_";
+
+	    //put the ones with more "&&"(more checkboxes selected) on the top.
+	    //find the mistakes in the queries where you have userType=$scope...userrank 
+	    //change SELECT * into _id AS PANTHER.., userType and other desired fields
+        
+        //usertype and project and rank
+        if(ur && urs && up && ups && ut && uts){
+				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedrank.name+"' AND rank='"+$scope.selectedproject+"'" , [data]);
         }
         //usertype and project
-        if($scope.selectedusertype.name && $scope.selectedproject.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedproject.name+"'" , [data]);
+        else if(ut && uts && up && ups){
+				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND project='"+$scope.selectedproject.name+"'" , [data]);
+        
         }
-        //project and rank
-        if($scope.selectedusertype.name && $scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selecteduserrank.name+"' AND rank='"+$scope.selectedproject.name+"'" , [data]);
+        //usertype and rank
+		else if(ut && uts && ur && urs){
+				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank * INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selecteduserrank.name+"'" , [data]);
         }
-        //usertype and project and rank
-        if($scope.selectedusertype.name && $scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedrank.name+"' AND rank='"+$scope.selectedproject+"'" , [data]);
-        }
-
-}
-);
-};
-
-
-
+        //rank and project
+		else if(ur && urs && up && ups ){
+				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank * INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selecteduserrank.name+"' AND rank='"+$scope.selecteduserproject.name+"'" , [data]);
+		}
+        //usertype
+		else if(ut && uts){
+				var res = alasql("SELECT  pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"'" , [data]);
+		}
+		//rank
+		else if(ur && urs){
+				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE rank='"+$scope.selecteduserrank.name+"'" , [data]);
+		}
+		//project goes here
+		else if(up && ups){
+				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE project='"+$scope.selectedproject.name+"'" , [data]);
+		}
 		
+        
+        
+		
+		}
+		);
+		};
+
 		function confirm_msg()
         {
             swal({   
@@ -549,7 +599,20 @@ adminService.loadAllUsers().then(function(data){
             }
             );
         };
-		
+				function changestat_msg()
+         {
+            swal({   
+                title: "Project Status Has Changed",   
+                text: "Project's status has been changed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+			
+            }
+            );
+        };
 		function changeclear_msg()
          {
             swal({   
@@ -598,6 +661,59 @@ adminService.loadAllUsers().then(function(data){
 				changepro_msg();
 			}
 		};
+		//Joe's User Story 
+		function ChangeProjectStatus()
+		{
+			//Get the project info based on the title being passed
+			//Change status
+			//Update DB
+			var project = vm.cproject;
+
+			//console.log(project.title);
+			if(project){
+				var selectedStatus = $scope.selectedStatus;
+				//console.log(selectedStatus);
+				if( selectedStatus == vm.status[0]) {
+				selectedStatus = 'Active';
+				//console.log(selectedStatus);
+				} else {
+					selectedStatus = 'Disabled';
+					//console.log(selectedStatus);
+				}
+				project.status = selectedStatus;
+				ProjectService.editProject(project, project._id);
+				//console.log("In the Projects!");
+			}
+			changestat_msg();
+		};
+		//Joe's User Story
+		function ChangeTermStatus()
+		{
+			var term = vm.cterm;
+
+			var selectedTerm = $scope.selectedTerm.name;
+			console.log(selectedTerm);
+			//console.log(term.name);
+			if(term){
+				var selectedTermStatus = $scope.selectedTermStatus;
+				if (selectedTermStatus == vm.active[0]){
+					console.log(selectedTermStatus);
+					selectedTermStatus = 'Active';
+				} else {
+					selectedTermStatus = 'Disabled';
+				}
+				for(i = 0; i < vm.projects.length; i++){
+					//console.log(vm.projects[i].title);
+					if(vm.projects[i].semester == selectedTerm) {
+						vm.projects[i].status = selectedTermStatus;
+						ProjectService.editProject(vm.projects[i], vm.projects[i]._id);
+					}
+				}
+				term.status = selectedTermStatus;
+				ProjectService.editTerm(term, term._id);
+				}
+				changestat_msg();
+			}
 		
 		//Remove a user from a project
 		function ClearProject()
@@ -613,7 +729,7 @@ adminService.loadAllUsers().then(function(data){
 					recipient: email, 
 					text:  "Dear VIP user, your current project has been cleared. For more information, please contact a PI.",
 					subject: "Project Cleared", 
-					recipient2: "test@example.com", 
+					recipient2: "jgonz770@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
 					text2: "", 
 					subject2: "" 
 				};
