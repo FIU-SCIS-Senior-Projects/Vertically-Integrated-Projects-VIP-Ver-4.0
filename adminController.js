@@ -466,63 +466,25 @@ reviewStudentAppService.addterm(termsdata).then(function(success){ },function(er
 			}
 		}
 	//Updated code	//userstory #1172
+//userstory #1172
 function exportData() {
-adminService.loadAllUsers().then(function(data){
-	  //console.log($scope.selectedusertype.name);
-	  	var ut = ((typeof $scope.usertype=="undefined")==false);
-	  	var ur = ((typeof $scope.userrank=="undefined")==false);
-	    var up = ((typeof $scope.userproject=="undefined")==false);
-	    var uts = ((typeof $scope.selectedusertype=="undefined")==false);
-	    var urs = ((typeof $scope.selecteduserrank=="undefined")==false);
-	    var ups = ((typeof $scope.selectedproject=="undefined")==false);
-	    console.log(ut);
-	    console.log(ur);
-	    console.log(up);
-	    console.log(uts);
-	    console.log(urs);
 	    var date = new Date();
 	    var todays = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear()+"_";
+vm.alldata;
+var nArray = [];
+adminService.loadAllUsers().then(function(data){
+vm.alldata = data;
+vm.alldata.forEach(function (obj)
+				{
+					for (var j = 0; j < $scope.filteredItems.length; j++){
+					if (obj.email == $scope.filteredItems[j].email)
+					nArray.push(obj);
+					}
+				});
+	var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? ", [nArray]);
 
-	    //put the ones with more "&&"(more checkboxes selected) on the top.
-	    //find the mistakes in the queries where you have userType=$scope...userrank 
-	    //change SELECT * into _id AS PANTHER.., userType and other desired fields
-        
-        //usertype and project and rank
-        if(ur && urs && up && ups && ut && uts){
-				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedrank.name+"' AND rank='"+$scope.selectedproject+"'" , [data]);
-        }
-        //usertype and project
-        else if(ut && uts && up && ups){
-				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND project='"+$scope.selectedproject.name+"'" , [data]);
-        
-        }
-        //usertype and rank
-		else if(ut && uts && ur && urs){
-				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank * INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selecteduserrank.name+"'" , [data]);
-        }
-        //rank and project
-		else if(ur && urs && up && ups ){
-				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank * INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selecteduserrank.name+"' AND rank='"+$scope.selecteduserproject.name+"'" , [data]);
+		});
 		}
-        //usertype
-		else if(ut && uts){
-				var res = alasql("SELECT  pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"'" , [data]);
-		}
-		//rank
-		else if(ur && urs){
-				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE rank='"+$scope.selecteduserrank.name+"'" , [data]);
-		}
-		//project goes here
-		else if(up && ups){
-				var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? WHERE project='"+$scope.selectedproject.name+"'" , [data]);
-		}
-		
-        
-        
-		
-		}
-		);
-		};
 
 		function confirm_msg()
         {
