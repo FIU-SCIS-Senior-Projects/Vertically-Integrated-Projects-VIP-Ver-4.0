@@ -469,7 +469,7 @@ reviewStudentAppService.addterm(termsdata).then(function(success){ },function(er
 //userstory #1172
 function exportData() {
 	    var date = new Date();
-	    var todays = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear()+"_";
+	    var todays = (date.getMonth()+1)+"-"+date.getDate()+"-"+date.getFullYear()+"_";
 vm.alldata;
 var nArray = [];
 adminService.loadAllUsers().then(function(data){
@@ -481,7 +481,7 @@ vm.alldata.forEach(function (obj)
 					nArray.push(obj);
 					}
 				});
-	var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? ", [nArray]);
+	var res = alasql("SELECT pantherID,firstName,lastName,email,project,semester,department,college,skillItem,vipcredit,volunteer,independentstudy,rank,userType INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? ", [nArray]);
 
 		});
 		}
