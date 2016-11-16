@@ -10,8 +10,8 @@
 <tr>
 <td colspan="4">
 <!-- User Story #1175 -->
-<label>*Project:</label>
-<select ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects | filter: project.status = 'Active'" class="form-control"required>
+<label>*Project (Please check the <a href="#/vip-projects">"PROJECTS"</a> page for more information):</label>
+<select ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects" class="form-control" required>
 </select>
 </td>
 </tr>
@@ -56,12 +56,17 @@
 </div><br>
 
 </td>
-<td>
-<label>Rank:</label>
+
+<td >
+<label>*Rank:</label>
 <div>
-<input class="form-control" ng-model="projApp.rank" ng-readonly="true">
-</div><br>
-</tr>
+<select ng-model="projApp.selectedRank" ng-options="rank as rank.name for rank in projApp.ranks" class="form-control" required>
+<option></option></select>
+
+</div>
+<!--   <input class="form-control" ng-model="projApp.rank" ng-readonly="false">   -->
+
+</td>
 <tr ng-hide="guest">
 <td>
 <!-- User Story #1175 -->
@@ -93,6 +98,7 @@
 
 <tr ng-if="projApp.branch == '1'">
 <td colspan="4">
+<label>*Please select one of the options:</label>
 <select class="form-control" ng-model="projApp.vipcredit" required>
 <option></option>
 <option value="IDS 2947">1 Credit [IDS 2947] </option>
@@ -104,10 +110,12 @@
 
 <tr ng-if="projApp.branch == '3'">
 <td colspan="4">
-<label>Name of the Instructor*</label>
+<label>*Name of the Instructor</label>
 <input type="text" class="form-control" ng-model="projApp.independentstudy" required/>
 </td>
 </tr>
+
+
 
 
 
@@ -134,7 +142,7 @@
 <tr ng-hide="guest">
 <td colspan="4">
 
-<label>*Skill Item:</label>
+<label>*Skills and Experience:</label>
 <div>
 <input type="text" ng-model="projApp.skillItem" class="form-control"  ng-readonly="false" required/>
 </div>

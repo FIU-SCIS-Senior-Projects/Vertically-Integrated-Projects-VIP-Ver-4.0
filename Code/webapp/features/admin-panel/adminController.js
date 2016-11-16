@@ -465,41 +465,26 @@ reviewStudentAppService.addterm(termsdata).then(function(success){ },function(er
 			});
 			}
 		}
-		//userstory #1172
+		//Updated code	//userstory #1172
+//userstory #1172
 function exportData() {
+	    var date = new Date();
+	    var todays = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear()+"_";
+vm.alldata;
+var nArray = [];
 adminService.loadAllUsers().then(function(data){
-	  //console.log($scope.selectedusertype.name);
-		if($scope.selectedusertype.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"'" , [data]);
-		}
-		//rank
-		if($scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE rank='"+$scope.selecteduserrank.name+"'" , [data]);
-		}
-		//project goes here
-		if($scope.selectedproject.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE joined_project='"+$scope.selectedproject.name+"'" , [data]);
-		}
-		//usertype and rank
-		if($scope.selectedusertype.name && $scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selecteduserrank.name+"'" , [data]);
-        }
-        //usertype and project
-        if($scope.selectedusertype.name && $scope.selectedproject.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedproject.name+"'" , [data]);
-        }
-        //project and rank
-        if($scope.selectedusertype.name && $scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selecteduserrank.name+"' AND rank='"+$scope.selectedproject.name+"'" , [data]);
-        }
-        //usertype and project and rank
-        if($scope.selectedusertype.name && $scope.selecteduserrank.name){
-				var res = alasql("SELECT * INTO XLS('Report.xls',{headers:true}) FROM ? WHERE userType='"+$scope.selectedusertype.name+"' AND rank='"+$scope.selectedrank.name+"' AND rank='"+$scope.selectedproject+"'" , [data]);
-        }
-		
-		}
-		);
-		};
+vm.alldata = data;
+vm.alldata.forEach(function (obj)
+				{
+					for (var j = 0; j < $scope.filteredItems.length; j++){
+					if (obj.email == $scope.filteredItems[j].email)
+					nArray.push(obj);
+					}
+				});
+	var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? ", [nArray]);
+
+		});
+	}	
 
 		function confirm_msg()
         {

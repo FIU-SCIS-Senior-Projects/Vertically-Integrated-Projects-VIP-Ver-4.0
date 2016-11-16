@@ -130,13 +130,26 @@ angular
 						]
 					}
 				];
-
+		vm.ranks = [
+			{ "name" : "Freshman", "rank" : "Freshman" },
+			{ "name" : "Sophmore", "rank" : "Sophmore" },
+			{ "name" : "Junior", "rank" : "Junior" },
+			{ "name" : "Senior", "rank" : "Senior" },
+			{ "name" : "Masters", "rank" : "Masters" },
+			{ "name" : "PhD", "rank" : "PhD" },
+			{ "name" : "postDoc", "rank" : "Student" },
+		
+		];
 				vm.genders = ['Male', 'Female'];
 				vm.semesters = ['Spring 2017', 'Summer 2017'];
 
 				vm.selectedCollege = vm.Colleges.find(function (element) {
 					return element.name === data.college;
-				});;
+				});
+					vm.selectedRank = vm.ranks.find(function(element){
+					return element.name === data.rank;
+				});
+				
 						
 				$scope.done = true;
 				profile = data;
@@ -232,7 +245,7 @@ angular
         vm.save = function()
         {
 			
-			if (vm.sProject.status == 'Inactive') {
+			if (vm.sProject.status == 'Disabled') {
 				console.log(vm.sProject.status);
 				swal({
                             title: "Dear Student!",   
@@ -249,6 +262,28 @@ angular
             // in the event of high volume traffic, this function may take longer to complete for each user
 			loading();
 			
+			if (vm.profile.userType == 'Student') {
+				for (i = 0; i < vm.projects.length; i++){
+					project = vm.projects[i];
+					//console.log(project.title);
+				for (j = 0; j < project.members_detailed.length; j++) {
+							if (project.members_detailed[j] === (profile.firstName + " " + profile.lastName)) {
+								swal({
+                            title: "Dear Student!",   
+                            text: "You have already applied to or joined the project '" + project.title + "'. Please leave that project before applying for any others",   
+                            type: "info",   
+                            confirmButtonText: "Okay" ,
+                            showCancelButton: true,
+                }, function () {
+                            //alert(1);
+                            $window.location.href = "/#/vip-projects";
+                });
+								return;
+							}
+						}
+						//console.log(i);
+				}
+			}
             // processes project application, if the user is not a guest
 			if (!$scope.guest)
             {
@@ -274,10 +309,10 @@ angular
                 // if the user provided us with new information that wasnt previously in the database for their account, add that info to the db
                 //updateUserData(vm, vm.profile);
                 
-                if (vm.profile.rank != vm.rank)
+                if (vm.profile.rank != vm.selectedRank)
                 {
                     console.log("1");
-                    vm.profile.rank = vm.rank;
+                    vm.profile.rank = vm.selectedRank.name;
                 }
 
                 if (vm.profile.pantherID != vm.pID)
@@ -409,13 +444,13 @@ angular
 							return;
 						}
 					}
-					for (i = 0; i < project.members_detailed.length; i++) {
-						if (project.members_detailed[i] === (profile.firstName + " " + profile.lastName)) {
-							 error_msg();
-							return;
+
+						for (i = 0; i < project.members_detailed.length; i++) {
+							if (project.members_detailed[i] === (profile.firstName + " " + profile.lastName)) {
+								error_msg();
+								return;
+							}
 						}
-					}
-					
 					profile.joined_project = false;
                     profile.modifying = 2;
 					User.update({user: profile});
@@ -630,7 +665,7 @@ angular
          {
             swal({   
                 title: "Sorry",   
-                text: "You've already applied for this project or are already joined.",   
+                text: "You've already applied for this project, or have already joined.",   
                 type: "warning",   
                 confirmButtonText: "Ok" ,
                 allowOutsideClick: true,

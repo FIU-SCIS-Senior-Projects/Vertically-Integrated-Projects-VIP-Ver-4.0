@@ -57,7 +57,7 @@
 							<td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
 						</tr>
 						-->
-							<tr ng-repeat="user in vm.filteredusers | filter:query track by $index">
+							<tr ng-repeat="user in (filteredItems = ( vm.filteredusers | filter:query))">
 							<td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
 						</tr>
 						
