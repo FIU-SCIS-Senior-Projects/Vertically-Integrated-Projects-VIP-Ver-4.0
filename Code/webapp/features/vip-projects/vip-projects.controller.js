@@ -26,28 +26,16 @@
         var selectedFilter = null;
         vm.filteredprojects;
         
-        vm.filters = [
+         vm.filters = [
+            
             {
-                name: 'Show All Projects',
+                name: '(A-Z)',
             },
             {
-                name: 'Open and Joinable Projects',
+                name: '(Z-A)',
             },
-            {
-                name: 'Full and Non-Joinable Projects',
-            },
-            {
-                name: 'Reverse Alphabetical (Z-A)',
-            },
-            {
-                name: 'Active Projects',
-            },
-			{
-                name: 'Proposed Date (New-Old)',
-            },
-            {
-                name: 'Proposed Date (Old-New)',
-            }
+
+            
         ];
         
         $scope.applyFilter = function()
@@ -58,23 +46,21 @@
             
             switch (selectedFilter)
             {
-                case 'Active Projects':
-                    //alert('actives');
-                    projectsArray = [];
-                    vm.projects.forEach(function (obj)
+                  case '(A-Z)':
+                    var tempProj = [];
+                    tempProj = vm.projects;
+                    tempProj.sort(function(a, b)
                     {
-                        // user is in project we selected
-                        if (obj.status == "Active")
-                        {
-                            projectsArray.push(obj);
-                            //alert(obj.title);
-                        }
-                    });
+                        if (b.title > a.title) return -1;
+                        if (b.title < a.title) return 1;
+                        return 0;
+                    })
                     
-                    vm.filteredprojects = projectsArray;
+                    vm.filteredprojects = tempProj;
                     break;
-                
-                case 'Reverse Alphabetical (Z-A)':
+
+
+                case '(Z-A)':
                     var tempProj = [];
                     tempProj = vm.projects;
                     tempProj.sort(function(a, b)
@@ -83,72 +69,6 @@
                         if (a.title < b.title) return 1;
                         return 0;
                     })
-                    
-                    vm.filteredprojects = tempProj;
-                    break;
-                    
-                case 'Open and Joinable Projects':
-                    projectsArray = [];
-                    vm.projects.forEach(function (obj)
-                    {                       
-                        if (obj.members.length < obj.maxStudents)
-                        {
-                            projectsArray.push(obj);
-                        }
-                    });
-                    
-                    vm.filteredprojects = projectsArray;
-                    break;
-                
-                case 'Full and Non-Joinable Projects':
-                    projectsArray = [];
-                    vm.projects.forEach(function (obj)
-                    {                       
-                        if (obj.members.length >= obj.maxStudents)
-                        {
-                            projectsArray.push(obj);
-                        }
-                    });
-                    
-                    vm.filteredprojects = projectsArray;
-                    break;
-                    
-                case 'Show All Projects':
-                    vm.filteredprojects = vm.projects;
-                    break;
-					
-                case 'Proposed Date (Old-New)':
-                    var tempProj = [];
-                    tempProj = vm.projects;
-                    tempProj.sort(function(a, b)
-                    {
-                        var c = new Date(a.proposedDate);
-                        var d = new Date(b.proposedDate);
-                        return c-d;
-                    });
-                    tempProj.forEach(function (obj){
-                        if(obj.proposedDate){
-                        obj.proposedDate = new Date(obj.proposedDate);
-                        }
-                    });
-                    
-                    vm.filteredprojects = tempProj;
-                    break;  
-                    
-                case 'Proposed Date (New-Old)':
-                    var tempProj = [];
-                    tempProj = vm.projects;
-                    tempProj.sort(function(a, b)
-                    {
-                        var c = new Date(a.proposedDate);
-                        var d = new Date(b.proposedDate);
-                        return d-c;
-                    });
-                    tempProj.forEach(function (obj){
-                        if(obj.proposedDate){
-                        obj.proposedDate = new Date(obj.proposedDate);
-                        }
-                    });
                     
                     vm.filteredprojects = tempProj;
                     break;

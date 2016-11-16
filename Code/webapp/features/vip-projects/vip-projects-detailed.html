@@ -7,7 +7,15 @@
 
         <div class="col-sm-9 project-second-section-middle">
             <div class="col-sm-12 detailed-project-info">
+				<center>
+					<h2 class="proj-status" ng-hide="(vm.data.status == 'Active')">
+						
+                        <strong>This Project is Currently Inactive</strong>
+                    </h2>
+				</center>
                     <h2 class="proj-title-teams">
+						
+						
                         <strong>{{vm.data.title}}</strong>
                     </h2>
                     <hr>
