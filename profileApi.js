@@ -30,10 +30,11 @@ module.exports = function(app, express) {
                 profile.department = req.body.department;
 				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
+                 // User Story #1189
                 profile.vipcredit  = req.body.vipcredit;
                 profile.volunteer  = req.body.volunteer;
                 profile.independentstudy = req.body.independentstudy;
-
+                profile.levels = req.body.levels;
                 
                 console.log("new gender: " + profile.gender);
                 console.log("new college: " + profile.college);
@@ -77,9 +78,11 @@ module.exports = function(app, express) {
                 profile.joined_project = req.body.joined_project;
 				 // User Story #1144
                 profile.skillItem = req.body.skillItem;
+                 // User Story #1189
                 profile.vipcredit  = req.body.vipcredit;
                 profile.volunteer  = req.body.volunteer;
                 profile.independentstudy = req.body.independentstudy;
+                profile.levels = req.body.levels;
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
                 
@@ -192,6 +195,7 @@ module.exports = function(app, express) {
 
             // find the profile via _id
             Profile.findById(req.body._id, function(err, profile){
+
 				// note to future devs: "profile.rank" is the users current rank in database, "req.body.rank" is the rank they are attempting to obtain
                 // beyond this point, the profile has been found
                 
@@ -233,14 +237,21 @@ module.exports = function(app, express) {
                 
 				// User Story #1144
                 profile.skillItem = req.body.skillItem;
+                 // User Story #1189
                 profile.vipcredit  = req.body.vipcredit;
                 profile.volunteer  = req.body.volunteer;
                 profile.independentstudy = req.body.independentstudy;
+                profile.levels = req.body.levels;
                 // this field will be set to true if the acceptProfile() function called us
                 if (req.body.piApproval)
                 {
                     profile.piApproval = req.body.piApproval;
                 }
+//Sprint#5 part 3
+else if (req.body.piDenial)
+{
+    profile.piDenial = req.body.piDenial;
+}
 				else {
 					if (!profile.google) {
 						//console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");

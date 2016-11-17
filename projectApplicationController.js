@@ -130,17 +130,27 @@ angular
 						]
 					}
 				];
+		//Sprint#5 part 2
+//Sprint#5 part 3
 		vm.ranks = [
-			{ "name" : "Freshman", "rank" : "Freshman" },
-			{ "name" : "Sophmore", "rank" : "Sophmore" },
-			{ "name" : "Junior", "rank" : "Junior" },
-			{ "name" : "Senior", "rank" : "Senior" },
-			{ "name" : "Masters", "rank" : "Masters" },
-			{ "name" : "PhD", "rank" : "PhD" },
+			{ "name" : "Freshman", "rank" : "Student" },
+			{ "name" : "Sophmore", "rank" : "Student" },
+			{ "name" : "Junior", "rank" : "Student" },
+			{ "name" : "Senior", "rank" : "Student" },
+			{ "name" : "Masters", "rank" : "Student" },
+			{ "name" : "PhD", "rank" : "Student" },
 			{ "name" : "postDoc", "rank" : "Student" },
-		
+			{ "name" : "PI", "rank" : "Pi/CoPi" },
+			{ "name" : "CoPI", "rank" : "Pi/CoPi" },
+			{ "name" : "Coordinator", "rank" : "Pi/CoPi" },
+			{ "name" : "External Member", "rank" : "Pi/CoPi" },
+			{ "name" : "Administrator", "rank" : "Staff/Faculty" },
+			{ "name" : "Director", "rank" : "Staff/Faculty" },
+			{ "name" : "Instructor", "rank" : "Staff/Faculty" },
+			{ "name" : "Assitant Professor", "rank" : "Staff/Faculty" },
+			{ "name" : "Associate Professor", "rank" : "Staff/Faculty" },
+			{ "name" : "Full Professor", "rank" : "Staff/Faculty" }
 		];
-
 					
 					
 
@@ -150,6 +160,7 @@ angular
 				vm.selectedCollege = vm.Colleges.find(function (element) {
 					return element.name === data.college;
 				});
+				//Sprint#5 part 2
 					vm.selectedRank = vm.ranks.find(function(element){
 					return element.name === data.rank;
 				});
@@ -165,7 +176,7 @@ angular
 				vm.gender = data.gender;
 				vm.email = data.email;
 				vm.pID = data.pantherID;
-				vm.rank = data.rank;
+vm.selectedRank = data.rank;
 				vm.school = data.department;
 				vm.college = data.college;
 				vm.semester = data.semester;
@@ -272,6 +283,7 @@ angular
                 // if the user provided us with new information that wasnt previously in the database for their account, add that info to the db
                 //updateUserData(vm, vm.profile);
                 
+                //Sprint#5 part 2
                if (vm.profile.rank != vm.selectedRank)
                 {
                     console.log("1");
@@ -307,7 +319,7 @@ angular
                     vm.profile.skillItem = vm.skillItem;
                 }
 
-                vm.profile.rank = vm.rank;
+vm.profile.rank = vm.selectedRank;
                 vm.profile.vipcredit = vm.vipcredit;
                 vm.profile.independentstudy = vm.independentstudy;
                 if(vm.branch =='2'){
