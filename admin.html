@@ -39,23 +39,25 @@
 							<th>
 								<b>List of Users (Click to View their Profile):
 							</th>
-				<!-- user story #1158 -->
+							
+							<!-- user story #1158 -->
 					    </tr>
-<tr>
-<td>
-<div class="inner-addon right-addon">
-<i class="glyphicon glyphicon-search"></i>
-<input type="text" class="form-control" ng-model="query" class="form-control" name="search" placeholder="Search Users" />
-</div>
-</td>
-</tr>
+				<tr>
+					<td>
+						<div class="inner-addon right-addon">
+						<i class="glyphicon glyphicon-search"></i>
+						<input type="text" class="form-control" ng-model="query" class="form-control" name="search" placeholder="Search Users" />
+						</div>
+						</td>
+				</tr>
 						<!--	<tr ng-repeat="user in vm.filteredusers track by $index">
 							<td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
 						</tr>
 						-->
-<tr ng-repeat="user in vm.filteredusers | filter:query track by $index">
-<td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
-</tr>
+							<tr ng-repeat="user in vm.filteredusers | filter:query track by $index">
+							<td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
+						</tr>
+						
 						</table>
 				
 					</div>
@@ -77,7 +79,7 @@
 							<p><b>Email: {{user.email}} </b></p>	
 							<p><b>Department: {{user.department}} </b></p>	
 							<p><b>College: {{user.college}} </b></p>	
-							<p><b>Project: {{user.project}} </b></p>
+							<p><b>Project: {{user.project_title}} </b></p>
                             <a href = "/#/sendmessage/{{user.email}}/0/">
 							<button class="btn btn-info btn-block">Message {{user.firstName}} {{user.lastName}}</button>
                             </a>
@@ -167,6 +169,41 @@
 					<tr>
 						<th>
 								<button style= "width: 80px;" ng-click="vm.sw()" class="btn btn-success btn-block">Change</button>
+						</th>
+						<th>
+								<button style= "width: 80px;" ng-click="vm.sc()" class="btn btn-success btn-danger">Clear</button>
+						</th>
+					</tr>
+					</table>
+					</div>
+				
+	</div>
+	 <!--Joe's User Story -->
+		<div class="col-md-6 panel panel-default">
+				
+					<h3 align="center"> Lock/Unlock Projects </h3>
+					<div class="form-group">
+					<table class="table">
+					<tr>
+						<th>
+							<b>Project:</b> <select  class="form-control" ng-model="selectedProjectMember" ng-options="projects as projects.title for projects in vm.projects" value="{{vm.currentProject(selectedProject)}}" ></select>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<b>change Project's status to:  </b>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<select  class="form-control" ng-model="projects.status" ng-options="projects as projects for projects in vm.status" value="{{vm.currentProject(selectedProject)}}"></select>
+						</th>
+					</tr>
+					</table>
+					<table class="table" style="height: 1px;">
+					<tr>
+						<th>
+								<button style= "width: 80px;" ng-click="vm.se(vm.currentProject)" class="btn btn-success btn-block">Change</button>
 						</th>
 						<th>
 								<button style= "width: 80px;" ng-click="vm.sc()" class="btn btn-success btn-danger">Clear</button>
