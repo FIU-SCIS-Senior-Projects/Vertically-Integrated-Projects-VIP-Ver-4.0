@@ -61,7 +61,8 @@
 						</table>
 				
 					</div>
-					<div class="col-md-4 panel panel-default" style="height: 415px;">
+					<!-- Adding Scroll bar -->
+					<div class="col-md-4 panel panel-default"style="height: 415px;  overflow:scroll;">
 				
 					<table class="table">
 					<tr>
@@ -71,14 +72,21 @@
 					</tr>
 					<tr >
 						<th ng-if="!vm.currentuserview"><center><h1>No User Selected</h1></center></th>
-						<th ng-repeat="user in vm.currentuserview">
+						<th ng-repeat="user in vm.currentuserview" style="overflow:scroll; height:25px;">
 							<p><b>Name: {{user.firstName}} {{user.lastName}} </b></p>	
 							<p><b>Gender: {{user.gender}} </b></p>
 							<p><b>UserType: {{user.userType}} </b></p>
 							<p><b>UserRank: {{user.userRank}} </b></p>
 							<p><b>Email: {{user.email}} </b></p>	
 							<p><b>Department: {{user.department}} </b></p>	
-							<p><b>College: {{user.college}} </b></p>	
+							<p><b>College: {{user.college}} </b></p>
+							<!-- Adding More fileds -->
+							<p><b>Panther ID: {{user.pantherID}} </b></p>
+							<p><b>Skills: {{user.skillItem}} </b></p>
+							<p><b>VIP Credit: {{user.vipcredit}} </b></p>
+							<p><b>Volunteer: {{user.volunteer}} </b></p>
+							<p><b>Independent Study: {{user.independentstudy}} </b></p>
+							<!-- Dispalying title -->	
 							<p><b>Project: {{user.project_title}} </b></p>
                             <a href = "/#/sendmessage/{{user.email}}/0/">
 							<button class="btn btn-info btn-block">Message {{user.firstName}} {{user.lastName}}</button>
