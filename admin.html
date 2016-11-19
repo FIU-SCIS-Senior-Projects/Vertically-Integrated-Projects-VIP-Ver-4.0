@@ -72,7 +72,7 @@
 					</tr>
 					<tr >
 						<th ng-if="!vm.currentuserview"><center><h1>No User Selected</h1></center></th>
-						<th ng-repeat="user in vm.currentuserview" style="overflow:scroll; height:25px;">
+						<th ng-repeat="user in vm.currentuserview">
 							<p><b>Name: {{user.firstName}} {{user.lastName}} </b></p>	
 							<p><b>Gender: {{user.gender}} </b></p>
 							<p><b>UserType: {{user.userType}} </b></p>
