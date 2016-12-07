@@ -11,7 +11,7 @@
 <td colspan="4">
 <!-- User Story #1175 -->
 <label>*Project (Please check the <a href="#/vip-projects">"PROJECTS"</a> page for more information):</label>
-<select ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects" class="form-control" required>
+<select ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects | filter: project.status = 'Active'" class="form-control" required>
 </select>
 </td>
 </tr>
@@ -60,7 +60,8 @@
 <td >
 <label>*Rank:</label>
 <div>
-<select ng-model="projApp.selectedRank" ng-options="rank as rank.name for rank in projApp.ranks" class="form-control" required>
+<!--Sprint#5 part3-->
+<select ng-model="projApp.selectedRank" ng-options="rank.name as rank.name for rank in projApp.ranks | filter:rank.rank=projApp.type" class="form-control" required>
 <option></option></select>
 
 </div>
@@ -104,6 +105,8 @@
 <option value="IDS 2947">1 Credit [IDS 2947] </option>
 <option value="IDS 3948">2 Credit [IDS 3948] </option>
 <option value="IDS 4993">3 Credit [IDS 4993] </option>
+<!--Sprint#5 part3-->	
+<option value="IDS 5993">Graduate [IDS 5993] </option>
 </select>
 </td>
 </tr>

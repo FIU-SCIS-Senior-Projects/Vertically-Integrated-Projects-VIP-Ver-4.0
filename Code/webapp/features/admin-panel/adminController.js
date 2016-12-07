@@ -366,11 +366,26 @@ reviewStudentAppService.addterm(termsdata).then(function(success){ },function(er
 		}
 		
 		function currentview(user)
-		{
-			vm.currentuserview = [];
-			vm.currentuserview.push(user);
-			console.log(vm.currentuserview);
-		}
+{
+	console.log(user);
+	var projectTitle = "";
+	var project_title = "project_title";
+	vm.currentuserview = [];
+	ProjectService.getProject(user.project).then(function(data){
+			if(data.kind=="ObjectId"){
+				user[project_title]= user.project;
+				vm.currentuserview.push(user);
+			}
+			else{
+			projectTitle = data.title;	
+			user[project_title] = projectTitle;
+			vm.currentuserview.push(user);	
+			console.log(user);	
+			}		
+
+	});
+
+}
 		
 		//Remove users 
 		function RemoveUser(user)
@@ -469,7 +484,7 @@ reviewStudentAppService.addterm(termsdata).then(function(success){ },function(er
 //userstory #1172
 function exportData() {
 	    var date = new Date();
-	    var todays = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear()+"_";
+	    var todays = (date.getMonth()+1)+"-"+date.getDate()+"-"+date.getFullYear()+"_";
 vm.alldata;
 var nArray = [];
 adminService.loadAllUsers().then(function(data){
@@ -481,10 +496,10 @@ vm.alldata.forEach(function (obj)
 					nArray.push(obj);
 					}
 				});
-	var res = alasql("SELECT pantherID,firstName,lastName,email,userType,department,skillItem,vipcredit,volunteer,independentstudy,rank INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? ", [nArray]);
+	var res = alasql("SELECT pantherID,firstName,lastName,email,project,semester,department,college,skillItem,vipcredit,volunteer,independentstudy,rank,userType INTO XLS('"+todays+"Report.xls',{headers:true}) FROM ? ", [nArray]);
 
 		});
-	}	
+		}	
 
 		function confirm_msg()
         {
