@@ -257,12 +257,6 @@ angular
                 return false;
             }
 
-
-            if (vm.userData.department == undefined)
-            {
-                alert("Please select your Department.");
-                return false;
-            }
 			// User Story #1175
             if(vm.userData.department == undefined){
             if(collegename != "Honors College")

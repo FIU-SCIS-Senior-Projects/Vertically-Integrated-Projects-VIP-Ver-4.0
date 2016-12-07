@@ -34,6 +34,10 @@ function userService($http) {
             return data.data;
         });
     };
-
+	profileFactory.updateProfile = function (profileData) {
+	return $http.put('/api/profile/',profileData).then(function(data){
+	return data.data;
+	});
+	};
     return profileFactory;
 }
